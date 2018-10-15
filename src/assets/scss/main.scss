@@ -1,3 +1,146 @@
-.font-besar{
-  font-size: 14pt;
+@import "color";
+@import "font";
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $hel-95;
+  color: $black;
+}
+
+.label {
+  @extend h1;
+  font-size: $font-m;
+}
+
+a {
+  color: $black;
+
+  &:hover {
+    cursor: pointer;
+    text-decoration: none;
+    color: $black-light;
+  }
+}
+
+.content {
+  margin-left: 265px;
+  margin-top: 50px;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding-left: 80px;
+  padding-right: 80px;
+  background-color: $yellow;
+  height: 100vh;
+
+  img {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.table-custom thead th {
+  font-family: $hel-bold;
+  font-size: $font-m;
+  background-color: $yellow;
+  border: 2px solid $black;
+}
+
+.checked {
+  position: absolute;
+  top: 0;
+}
+
+.loginform {
+  padding: 50px;
+  border-radius: 20px;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  border: 1px solid #ccc;
+}
+
+/***********************************************************/
+/****************** LIST ITEM UTILITIES ********************/
+/***********************************************************/
+
+%list-custom {
+  list-style: none;
+  cursor: pointer;
+}
+
+.list-sidebar {
+  padding-left: 0;
+  li {
+    @extend %list-custom;
+    color: #fff;
+    font-family: $hel-bold;
+    padding-bottom: 5px;
+  }
+}
+
+/******************************************************/
+/****************** TEXT UTILITIES ********************/
+/******************************************************/
+
+.text {
+  &-hel-reg {
+    font-family: $hel-reg;
+  }
+
+  &-hel-bold {
+    font-family: $hel-bold;
+  }
+
+  &-hel-95 {
+    font-family: $hel-95;
+  }
+
+  &-os-reg {
+    font-family: $os-reg;
+  }
+
+  &-os-bold {
+    font-family: $os-bold;
+  }
+
+  &-s{
+    font-size: $font-s;
+  }
+
+  &-m {
+    font-size: $font-m;
+  }
+
+  &-ml {
+    font-size: $font-ml;
+  }
+
+  &-l {
+    font-size: $font-l;
+  }
+
+  &-xl {
+    font-size: $font-xl;
+  }
+
+  &-black {
+    color: $black;
+
+    &:hover {
+      color: $black-light;
+    }
+  }
+
+  &-yellow {
+    color: $yellow;
+
+    &:hover {
+      color: $yellow-light
+    }
+  }
+
+  &-white{
+    color: $white;
+  }
 }
