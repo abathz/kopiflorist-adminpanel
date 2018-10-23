@@ -16,7 +16,6 @@ export default class extends Component<{}, { session: any }> {
   }
 
   render () {
-    if (!this.state.session) return ''
     return <SignupAdmin/>
   }
 }

@@ -1,9 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ReactQuill from 'react-quill'
+import ReactQuill, { Quill } from 'react-quill'
+import ImageResize from 'quill-image-resize-module'
 import { updateDataBlog } from 'actions/index'
-import { NextFunction } from 'express'
-import { Buffer } from 'buffer'
 
 interface StateProps {
   blog: any
@@ -16,6 +15,25 @@ interface DispatchProps {
 interface PropsComponent extends StateProps, DispatchProps { }
 
 interface StateComponent { }
+
+Quill.register('modules/ImageResize', ImageResize)
+
+const modules = {
+  toolbar: [
+    [{ 'header': [1, 2, 3] }],
+    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+    ['link', 'image']
+  ],
+  ImageResize: {}
+}
+
+const formats = [
+  'header',
+  'bold', 'italic', 'underline', 'strike', 'blockquote',
+  'list', 'bullet', 'indent',
+  'link', 'image'
+]
 
 class TextEditorBlog extends Component<PropsComponent, StateComponent> {
   constructor (props: any) {
@@ -30,20 +48,6 @@ class TextEditorBlog extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { blog } = this.props
-    const modules = {
-      toolbar: [
-        [{ 'header': [1, 2, 3] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-        ['link', 'image']
-      ]
-    }
-    const formats = [
-      'header',
-      'bold', 'italic', 'underline', 'strike', 'blockquote',
-      'list', 'bullet', 'indent',
-      'link', 'image'
-    ]
     return (
       <>
         <ReactQuill
