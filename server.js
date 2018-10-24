@@ -1,6 +1,6 @@
-import express from 'express'
-import next from 'next'
-import routes from './routes'
+let express = require('express')
+let next = require('next')
+let routes = require('./routes')
 
 const port = process.env.PORT || 3001
 const dev = process.env.NODE_ENV !== 'production'
@@ -18,7 +18,7 @@ app.prepare()
       return handler(req, res)
     })
 
-    server.listen(port, (err: Error) => {
+    server.listen(port, (err) => {
       if (err) throw err
       console.log(`> Ready on http://localhost:${port}`)
     })

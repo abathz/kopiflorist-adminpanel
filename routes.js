@@ -1,8 +1,6 @@
-import Routes from 'next-routes'
+const routes = require('next-routes')
 
-const routes = new Routes()
-
-routes
+module.exports = routes()
   .add('home', '/dashboard', 'home')
   .add('signup', '/signup', 'signup')
 
@@ -38,7 +36,3 @@ routes
   .add('banner', '/banner', 'banner')
   .add('createbanner', '/create_banner', 'createbanner')
   .add('editbanner', '/edit_banner/:id', 'editbanner')
-
-export default routes
-export const Link = routes.Link
-export const Router = routes.Router
