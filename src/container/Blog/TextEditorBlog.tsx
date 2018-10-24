@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import ReactQuill, { Quill } from 'react-quill'
-import ImageResize from 'quill-image-resize-module'
+import ImageResize from 'quill-image-resize-module-react'
 import { updateDataBlog } from 'actions/index'
 
 interface StateProps {
@@ -25,7 +25,9 @@ const modules = {
     [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
     ['link', 'image']
   ],
-  ImageResize: {}
+  ImageResize: {
+    parchment: Quill.import('parchment')
+  }
 }
 
 const formats = [

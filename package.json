@@ -30,6 +30,7 @@
     "next-routes": "^1.4.2",
     "popper.js": "^1.14.4",
     "quill-image-resize-module": "^3.0.0",
+    "quill-image-resize-module-react": "^3.0.0",
     "quill-image-upload": "^0.1.2",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
