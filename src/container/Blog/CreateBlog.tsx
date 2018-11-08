@@ -1,8 +1,8 @@
 import React, { Component, ChangeEvent, FormEvent } from 'react'
 import { connect } from 'react-redux'
+import TextEditorBlog from './TextEditorBlog'
 import { Button, Row, Col, Form, Label, FormGroup, Input } from 'reactstrap'
 import { updateDataBlog, createBlog } from 'actions/index'
-import dynamic from 'next/dynamic'
 
 interface StateProps {
   blog: any
@@ -16,8 +16,6 @@ interface DispatchProps {
 interface PropsComponent extends StateProps, DispatchProps { }
 
 interface StateComponent { }
-
-const TextEditorBlog = dynamic(import('./TextEditorBlog')as any, { ssr: false })
 
 class CreateBlog extends Component<PropsComponent, StateComponent> {
   constructor (props: any) {
@@ -41,7 +39,6 @@ class CreateBlog extends Component<PropsComponent, StateComponent> {
   }
 
   render () {
-    console.log(this.props.blog)
     return (
       <>
         <Row>

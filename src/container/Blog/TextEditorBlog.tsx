@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import ReactQuill, { Quill } from 'react-quill'
-import ImageResize from 'quill-image-resize-module-react'
 import { updateDataBlog } from 'actions/index'
+import { Editor } from '@tinymce/tinymce-react'
 
 interface StateProps {
   blog: any
@@ -16,26 +15,9 @@ interface PropsComponent extends StateProps, DispatchProps { }
 
 interface StateComponent { }
 
-Quill.register('modules/ImageResize', ImageResize)
-
-const modules = {
-  toolbar: [
-    [{ 'header': [1, 2, 3] }],
-    ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-    ['link', 'image']
-  ],
-  ImageResize: {
-    parchment: Quill.import('parchment')
-  }
-}
-
-const formats = [
-  'header',
-  'bold', 'italic', 'underline', 'strike', 'blockquote',
-  'list', 'bullet', 'indent',
-  'link', 'image'
-]
+const API = 'k8im9escmr0gvp1xvg6rwv53f1j7ndarvxpw3i7fcbdrzpz3'
+const plugins = 'link image code autoresize'
+const toolbar = 'undo redo | bold italic | alignleft aligncenter alignright | link image code'
 
 class TextEditorBlog extends Component<PropsComponent, StateComponent> {
   constructor (props: any) {
@@ -50,13 +32,43 @@ class TextEditorBlog extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { blog } = this.props
+    console.log(blog)
     return (
       <>
-        <ReactQuill
+        <Editor
+          apiKey={API}
           value={blog.content}
-          onChange={this.handleChange}
-          modules={modules}
-          formats={formats}
+          onEditorChange={this.handleChange}
+          init={{
+            plugins,
+            toolbar,
+            autoresize_bottom_margin: 20,
+            image_title: true,
+            file_picker_types: 'image',
+            file_picker_callback: (cb: Function) => {
+              let tinymce: any
+              let input: any = document.createElement('input')
+              input.setAttribute('type', 'file')
+              input.setAttribute('accept', 'image/*')
+
+              input.onchange = function () {
+                let file = this.files[0]
+
+                let reader: any = new FileReader()
+                reader.onload = function () {
+                  let id = 'blobid' + (new Date()).getTime()
+                  let blobCache = tinymce.activeEditor.editorUpload.blobCache
+                  let base64 = reader.result.split(',')[1]
+                  let blobInfo = blobCache.create(id, file, base64)
+                  blobCache.add(blobInfo)
+
+                  cb(blobInfo.blobUri(), { title: file.name })
+                }
+                reader.readAsDataURL(file)
+              }
+              input.click()
+            }
+          }}
         />
       </>
     )

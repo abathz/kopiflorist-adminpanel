@@ -26,7 +26,6 @@ class ProductList extends Component<PropsComponent, StateComponent> {
 
   componentDidMount () {
     this.props.getAllProduct()
-    this.props.getCategory()
   }
 
   onDeleteClick (id: any) {
@@ -34,16 +33,14 @@ class ProductList extends Component<PropsComponent, StateComponent> {
   }
 
   renderDataTable () {
-    const { allProduct, allCategory } = this.props
-    if (!allProduct && !allCategory) return ''
+    const { allProduct } = this.props
+    if (!allProduct) return ''
     return allProduct.map((_data: any) => {
-      const category: any[] = allCategory.filter((data: any) => data.id === _data.category)
-      if (!category) return ''
       return (
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>
           <td className='pt-3'>{_data.name}</td>
-          <td className='pt-3'>{category[0].category_name}</td>
+          <td className='pt-3'>{_data.category}</td>
           <td className='pt-3'>{_data.price}</td>
           <td className='pt-3'>{_data.quantity}</td>
           <td className='pt-3'>{_data.availability ? 'Active' : 'Inactive'}</td>

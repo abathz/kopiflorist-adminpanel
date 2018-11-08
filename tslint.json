@@ -5,6 +5,7 @@
     "tslint-react"
   ],
   "rules": {
+    "jsx-no-multiline-js": false,
     "await-promise": false,
     "deprecation": false,
     "no-use-before-declare": false,

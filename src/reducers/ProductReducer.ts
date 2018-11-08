@@ -14,6 +14,8 @@ interface State {
   price: string
   quantity: number
   category: number
+  quantity_edited: number
+  category_edited: number
   availability: boolean
   main_photo: []
   other_photo: []
@@ -31,6 +33,8 @@ const INITIAL_STATE: State = {
   price: '',
   quantity: 0,
   category: 0,
+  quantity_edited: 0,
+  category_edited: 0,
   availability: false,
   main_photo: [],
   other_photo: [],

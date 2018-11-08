@@ -1,5 +1,4 @@
 const path = require('path')
-const webpack = require('webpack')
 const withCss = require('@zeit/next-css')
 const withSass = require('@zeit/next-sass')
 const withTypescript = require('@zeit/next-typescript')
@@ -13,10 +12,6 @@ module.exports = withTypescript(withSass(withCss({
       reducers: path.resolve(__dirname, 'src/reducers'),
       routes: path.resolve(__dirname, './routes')
     }
-
-    config.plugins.push(new webpack.ProvidePlugin({
-      'window.Quill': 'quill/dist/quill.js'
-    }))
 
     return config
   }

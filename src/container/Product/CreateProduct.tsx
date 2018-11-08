@@ -55,7 +55,7 @@ class CreateProduct extends Component<PropsComponent, StateComponent> {
     const { allCategory } = this.props
     return allCategory.map((_data: any) => {
       return (
-        <option key={_data.id} value={_data.id}>{_data.category_name}</option>
+        <option key={_data.id} value={_data.category_name}>{_data.category_name}</option>
       )
     })
   }
