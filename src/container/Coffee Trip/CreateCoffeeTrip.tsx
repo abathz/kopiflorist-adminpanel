@@ -4,6 +4,7 @@ import { addDataTable, createTrip, updateDataTrip } from 'actions/index'
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { connect } from 'react-redux'
 import { Button, Col, Form, FormGroup, Input, Label, Row, Table } from 'reactstrap'
+import _ from 'lodash'
 
 interface StateProps {
   trip: any
@@ -18,12 +19,14 @@ interface DispatchProps {
 interface PropsComponent extends StateProps, DispatchProps { }
 
 interface StateComponent {
-  data: any
+  duration_day: string
 }
 
 class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
   constructor (props: any) {
     super(props)
+
+    this.state = { duration_day: '' }
 
     this.onInputChange = this.onInputChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -39,6 +42,13 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
       this.props.updateDataTrip({ prop: e.target.id, value: e.target.files })
       return
     }
+    if (e.target.id === 'duration') {
+      this.setState({
+        duration_day: e.target.value
+      }, () => {
+        this.props.updateDataTrip({ prop: 'dataTable', value: Array(Number(this.state.duration_day)) })
+      })
+    }
     this.props.updateDataTrip({ prop: e.target.id, value: e.target.value })
   }
 
@@ -49,6 +59,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
 
   onAddClick () {
     const data = {
+      day: this.props.trip.day,
       time: this.props.trip.time_itinerary,
       activity: this.props.trip.activity_itinerary,
       description: this.props.trip.description_itinerary
@@ -58,20 +69,23 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
 
   renderDataTable () {
     const { dataTable } = this.props.trip
-    if (!dataTable) return ''
-    return dataTable.map((_data: any, index: number) => {
-      return (
-        <tr key={index}>
-          <td>{_data.time}</td>
-          <td>{_data.activity}</td>
-          <td>{_data.description}</td>
-          <td><FontAwesomeIcon icon={faPen} /></td>
-        </tr>
-      )
+    return _.map(dataTable, (_data: any, index: number) => {
+      if (_.isEmpty(_data)) return <tr key={index}/>
+      if (_data.day === this.props.trip.day) {
+        return (
+          <tr key={index}>
+            <td>{_data.time}</td>
+            <td>{_data.activity}</td>
+            <td>{_data.description}</td>
+            <td><FontAwesomeIcon icon={faPen} /></td>
+          </tr>
+        )
+      }
     })
   }
 
   render () {
+    console.log(this.props.trip)
     return (
       <>
         <Row>
@@ -109,6 +123,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
                       <option defaultChecked={true}>Select</option>
                       <option value='1'>1</option>
                       <option value='3'>3</option>
+                      <option value='4'>4</option>
                     </Input>
                   </FormGroup>
                 </Col>
@@ -119,6 +134,13 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
               </FormGroup>
               <FormGroup>
                 <Label className='label' for='itinerary'>Itinerary</Label>
+                <Input type='select' id='day' className='mb-2' onChange={this.onInputChange}>
+                  <option defaultChecked={true}>Select</option>
+                  {_.map(Array(Number(this.state.duration_day)), (data: any, index: any) => {
+                    const value = index + 1
+                    return <option key={value} value={value}>{value}</option>
+                  })}
+                </Input>
                 <Table className='text-center table-custom' id='itinerary' bordered={true}>
                   <thead>
                     <tr>
@@ -136,7 +158,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
                   <Col xs='2'>
                     <FormGroup>
                       <Label className='label' for='time_itinerary'>Time</Label>
-                      <Input type='text' id='time_itinerary' onChange={this.onInputChange}/>
+                      <Input type='text' id='time_itinerary' onChange={this.onInputChange} />
                     </FormGroup>
                   </Col>
                   <Col xs='3'>
@@ -154,10 +176,10 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
                 </Row>
                 <Row>
                   <Col xs='12'>
-                    <Button className='float-right' color='primary' onClick={this.onAddClick}>Add</Button>
+                    <Button className='float-right' color='primary' onMouseDown={this.onAddClick}>Add</Button>
                   </Col>
                 </Row>
-                <div className='clearfix'/>
+                <div className='clearfix' />
               </FormGroup>
               <FormGroup>
                 <Label className='label' for='price'>Price/Guest</Label>

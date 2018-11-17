@@ -40,7 +40,7 @@ class BlogList extends Component<PropsComponent, StateComponent> {
           <td className='pt-3'>{date}</td>
           <td>
             <Link route='editblog' params={{ id: _data.id }}><Button color='primary' className='mr-1' size='sm'>Edit</Button></Link>
-            <Button color='danger' size='sm' onClick={this.onDeleteClick.bind(this, _data.id)}>Delete</Button>
+            <Button color='danger' size='sm' onMouseDown={this.onDeleteClick.bind(this, _data.id)}>Delete</Button>
           </td>
         </tr>
       )

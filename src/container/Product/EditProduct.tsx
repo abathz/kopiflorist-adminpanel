@@ -27,7 +27,7 @@ class EditProduct extends Component<PropsComponent, StateComponent> {
 
     this.onInputChange = this.onInputChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
-    this.onClickButtonAvailability = this.onClickButtonAvailability.bind(this)
+    this.onMouseDownButtonAvailability = this.onMouseDownButtonAvailability.bind(this)
   }
 
   componentDidMount () {
@@ -52,7 +52,7 @@ class EditProduct extends Component<PropsComponent, StateComponent> {
     this.props.editProduct(this.props.id, this.props.product)
   }
 
-  onClickButtonAvailability () {
+  onMouseDownButtonAvailability () {
     this.props.changeAvailabilityProduct(this.props.id)
   }
 
@@ -154,7 +154,7 @@ class EditProduct extends Component<PropsComponent, StateComponent> {
           </Col>
           <Col>
             <p className='label'>Availibility ({product.availability ? 'Active' : 'Inactive'})</p>
-            <Button className='px-5' color='primary' onClick={this.onClickButtonAvailability}>{product.availability ? 'Inactive' : 'Active'}</Button>
+            <Button className='px-5' color='primary' onMouseDown={this.onMouseDownButtonAvailability}>{product.availability ? 'Inactive' : 'Active'}</Button>
           </Col>
         </Row>
       </>

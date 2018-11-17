@@ -31,7 +31,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.onInputChange = this.onInputChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onAddClick = this.onAddClick.bind(this)
-    this.onClickButtonAvailability = this.onClickButtonAvailability.bind(this)
+    this.onMouseDownButtonAvailability = this.onMouseDownButtonAvailability.bind(this)
   }
 
   componentDidMount () {
@@ -64,7 +64,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.addDataTable(data)
   }
 
-  onClickButtonAvailability () {
+  onMouseDownButtonAvailability () {
     this.props.changeAvailabilityTrip(this.props.id)
   }
 
@@ -179,7 +179,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
                 </Row>
                 <Row>
                   <Col xs='12'>
-                    <Button className='float-right' color='primary' onClick={this.onAddClick}>Add</Button>
+                    <Button className='float-right' color='primary' onMouseDown={this.onAddClick}>Add</Button>
                   </Col>
                 </Row>
                 <div className='clearfix' />
@@ -206,7 +206,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
           </Col>
           <Col>
             <p className='label'>Availibility ({trip.availability ? 'Active' : 'Inactive'})</p>
-            <Button className='px-5' color='primary' onClick={this.onClickButtonAvailability}>{trip.availability ? 'Inactive' : 'Active'}</Button>
+            <Button className='px-5' color='primary' onMouseDown={this.onMouseDownButtonAvailability}>{trip.availability ? 'Inactive' : 'Active'}</Button>
           </Col>
         </Row>
       </>

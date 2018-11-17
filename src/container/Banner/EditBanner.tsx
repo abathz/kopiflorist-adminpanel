@@ -28,7 +28,7 @@ class EditBanner extends Component<PropsComponent, StateComponent> {
 
     this.onInputChange = this.onInputChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
-    this.onClickButtonAvailability = this.onClickButtonAvailability.bind(this)
+    this.onMouseDownButtonAvailability = this.onMouseDownButtonAvailability.bind(this)
   }
 
   componentDidMount () {
@@ -53,7 +53,7 @@ class EditBanner extends Component<PropsComponent, StateComponent> {
     this.props.editBanner(data)
   }
 
-  onClickButtonAvailability () {
+  onMouseDownButtonAvailability () {
     this.props.changeAvailabilityBanner(this.props.id)
   }
 
@@ -85,7 +85,7 @@ class EditBanner extends Component<PropsComponent, StateComponent> {
           </Col>
           <Col>
             <p className='label'>Availibility ({banner.availability ? 'Active' : 'Inactive'})</p>
-            <Button className='px-5' color='primary' onClick={this.onClickButtonAvailability}>{banner.availability ? 'Inactive' : 'Active'}</Button>
+            <Button className='px-5' color='primary' onMouseDown={this.onMouseDownButtonAvailability}>{banner.availability ? 'Inactive' : 'Active'}</Button>
           </Col>
         </Row>
       </>

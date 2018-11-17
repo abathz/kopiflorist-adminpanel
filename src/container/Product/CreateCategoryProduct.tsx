@@ -58,7 +58,7 @@ class CreateCategoryProduct extends Component<PropsComponent, StateComponent> {
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>
           <td className='pt-3'>{_data.category_name}</td>
-          <td><Button color='danger' size='sm' onClick={this.deleteCategory.bind(this, _data.id)}>Delete</Button></td>
+          <td><Button color='danger' size='sm' onMouseDown={this.deleteCategory.bind(this, _data.id)}>Delete</Button></td>
         </tr>
       )
     })
