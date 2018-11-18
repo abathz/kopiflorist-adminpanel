@@ -20,12 +20,12 @@ class TransactionList extends Component<PropsComponent, StateComponent> {
             <tr>
               <th>Transaction ID</th>
               <th>Transaction Code</th>
-              <th style={{ paddingBottom: '25px' }}>User</th>
-              <th style={{ paddingBottom: '25px' }}>Order Date & Time</th>
+              <th style={{ paddingBottom: '12px' }}>User</th>
+              <th style={{ paddingBottom: '12px' }}>Order Date & Time</th>
               <th>Coffee Trip & Product</th>
-              <th style={{ paddingBottom: '25px' }}>Quantity/Guest</th>
+              <th style={{ paddingBottom: '12px' }}>Quantity/Guest</th>
               <th>Total Price</th>
-              <th style={{ paddingBottom: '25px' }}>Status</th>
+              <th style={{ paddingBottom: '12px' }}>Status</th>
             </tr>
           </thead>
           <tbody>

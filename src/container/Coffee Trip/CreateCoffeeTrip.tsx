@@ -46,7 +46,13 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
       this.setState({
         duration_day: e.target.value
       }, () => {
-        this.props.updateDataTrip({ prop: 'dataTable', value: Array(Number(this.state.duration_day)) })
+        let arr = Array(Number(this.state.duration_day))
+
+        for (let i = 0; i < arr.length; i ++) {
+          arr[i] = Array()
+        }
+
+        this.props.updateDataTrip({ prop: 'dataTable', value: arr })
       })
     }
     this.props.updateDataTrip({ prop: e.target.id, value: e.target.value })
@@ -69,23 +75,26 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
 
   renderDataTable () {
     const { dataTable } = this.props.trip
-    return _.map(dataTable, (_data: any, index: number) => {
-      if (_.isEmpty(_data)) return <tr key={index}/>
-      if (_data.day === this.props.trip.day) {
-        return (
+    console.log(dataTable)
+    return _.map(dataTable, (data: any, index: number) => {
+      if (_.isEmpty(data)) return <tr key={index}/>
+      return _.map(data, (data: any, index: number) => {
+        if (data.day === this.props.trip.day) {
+          return (
           <tr key={index}>
-            <td>{_data.time}</td>
-            <td>{_data.activity}</td>
-            <td>{_data.description}</td>
+            <td>{data.time}</td>
+              <td>{data.activity}</td>
+              <td>{data.description}</td>
             <td><FontAwesomeIcon icon={faPen} /></td>
           </tr>
-        )
-      }
+          )
+        }
+      })
+
     })
   }
 
   render () {
-    console.log(this.props.trip)
     return (
       <>
         <Row>
@@ -133,7 +142,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
                 <Input type='text' id='provide' onChange={this.onInputChange} />
               </FormGroup>
               <FormGroup>
-                <Label className='label' for='itinerary'>Itinerary</Label>
+                <Label className='label' for='day'>Itinerary</Label>
                 <Input type='select' id='day' className='mb-2' onChange={this.onInputChange}>
                   <option defaultChecked={true}>Select</option>
                   {_.map(Array(Number(this.state.duration_day)), (data: any, index: any) => {
@@ -146,7 +155,6 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
                     <tr>
                       <th>Time</th>
                       <th>Activity</th>
-                      <th>Description</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -155,22 +163,16 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
                   </tbody>
                 </Table>
                 <Row>
-                  <Col xs='2'>
+                  <Col xs='4'>
                     <FormGroup>
                       <Label className='label' for='time_itinerary'>Time</Label>
                       <Input type='text' id='time_itinerary' onChange={this.onInputChange} />
                     </FormGroup>
                   </Col>
-                  <Col xs='3'>
+                  <Col xs='8'>
                     <FormGroup>
                       <Label className='label' for='activity_itinerary'>Activity</Label>
                       <Input type='text' id='activity_itinerary' onChange={this.onInputChange} />
-                    </FormGroup>
-                  </Col>
-                  <Col xs='7'>
-                    <FormGroup>
-                      <Label className='label' for='description_itinerary'>Description</Label>
-                      <Input type='text' id='description_itinerary' onChange={this.onInputChange} />
                     </FormGroup>
                   </Col>
                 </Row>

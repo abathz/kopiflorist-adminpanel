@@ -25,7 +25,6 @@ interface State {
   day: number
   time_itinerary: string
   activity_itinerary: string
-  description_itinerary: string
 }
 
 const INITAL_STATE: State = {
@@ -46,8 +45,7 @@ const INITAL_STATE: State = {
   dataTable: [],
   day: 0,
   time_itinerary: '',
-  activity_itinerary: '',
-  description_itinerary: ''
+  activity_itinerary: ''
 }
 
 export default (state = INITAL_STATE, action: Action) => {
@@ -55,8 +53,7 @@ export default (state = INITAL_STATE, action: Action) => {
     case UPDATE_DATA_TRIP:
       return { ...state, [action.payload.prop]: action.payload.value }
     case ADD_DATA_TABLE:
-      Object.freeze(state.dataTable.length)
-      state.dataTable[Number(action.payload.day) - 1] = action.payload
+      state.dataTable[Number(action.payload.day) - 1].push(action.payload)
       return { ...state }
     case GET_ALL_TRIP:
       return { ...state, allTrip: action.payload.data }
