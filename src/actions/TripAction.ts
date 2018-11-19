@@ -26,15 +26,16 @@ export const createTrip = (data: any) => async () => {
   formData.append('trip_date', data.trip_date)
   formData.append('duration', data.duration)
   formData.append('price', data.price)
-  for (const table of data.dataTable) {
-    formData.append('time_itinerary[]', table.time)
-  }
-  for (const table of data.dataTable) {
-    formData.append('activity_itinerary[]', table.activity)
-  }
-  for (const table of data.dataTable) {
-    formData.append('description_itinerary[]', table.description)
-  }
+  formData.append('itinerary', data.dataTable)
+  // for (const table of data.dataTable) {
+  //   formData.append('time_itinerary[]', table.time)
+  // }
+  // for (const table of data.dataTable) {
+  //   formData.append('activity_itinerary[]', table.activity)
+  // }
+  // for (const table of data.dataTable) {
+  //   formData.append('description_itinerary[]', table.description)
+  // }
   for (const photo of data.main_photo) {
     formData.append('main_photo', photo)
   }
