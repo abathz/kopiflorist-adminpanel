@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { connect } from 'react-redux'
 import { Button, Col, Form, FormGroup, Input, Label, Row, Table } from 'reactstrap'
+import _ from 'lodash'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { addDataTable, updateDataTrip, getTrip, editTrip, changeAvailabilityTrip } from 'actions/index'
@@ -70,16 +71,17 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
 
   renderDataTable () {
     const { dataTable } = this.props.trip
-    if (!dataTable) return ''
-    return dataTable.map((_data: any, index: number) => {
-      return (
-        <tr key={index}>
-          <td>{_data.time}</td>
-          <td>{_data.activity}</td>
-          <td>{_data.description}</td>
-          <td><FontAwesomeIcon icon={faPen} /></td>
-        </tr>
-      )
+    return _.map(dataTable, (data: any, index: number) => {
+      if (_.isEmpty(data)) return <tr key={index} />
+      if (data.day === Number(this.props.trip.day)) {
+        return (
+          <tr key={index}>
+            <td>{data.time}</td>
+            <td>{data.activity}</td>
+            <td><FontAwesomeIcon icon={faPen} /></td>
+          </tr>
+        )
+      }
     })
   }
 
@@ -97,6 +99,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { trip } = this.props
+    if (!trip) return ''
     return (
       <>
         <Row>
@@ -134,6 +137,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
                       <option defaultChecked={true}>Select</option>
                       <option value='1'>1</option>
                       <option value='3'>3</option>
+                      <option value='4'>4</option>
                     </Input>
                   </FormGroup>
                 </Col>
@@ -143,13 +147,19 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
                 <Input type='text' id='provide' value={trip.provide} onChange={this.onInputChange} />
               </FormGroup>
               <FormGroup>
-                <Label className='label' for='itinerary'>Itinerary</Label>
+                <Label className='label' for='day'>Itinerary</Label>
+                <Input type='select' id='day' className='mb-2' onChange={this.onInputChange}>
+                  <option>Select</option>
+                  {_.map(Array(trip.duration), (data: any, index: any) => {
+                    const value = index + 1
+                    return <option key={value} value={value}>{value}</option>
+                  })}
+                </Input>
                 <Table className='text-center table-custom' id='itinerary' bordered={true}>
                   <thead>
                     <tr>
                       <th>Time</th>
                       <th>Activity</th>
-                      <th>Description</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -158,22 +168,16 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
                   </tbody>
                 </Table>
                 <Row>
-                  <Col xs='2'>
+                  <Col xs='4'>
                     <FormGroup>
                       <Label className='label' for='time_itinerary'>Time</Label>
                       <Input type='text' id='time_itinerary' onChange={this.onInputChange} />
                     </FormGroup>
                   </Col>
-                  <Col xs='3'>
+                  <Col xs='8'>
                     <FormGroup>
                       <Label className='label' for='activity_itinerary'>Activity</Label>
                       <Input type='text' id='activity_itinerary' onChange={this.onInputChange} />
-                    </FormGroup>
-                  </Col>
-                  <Col xs='7'>
-                    <FormGroup>
-                      <Label className='label' for='description_itinerary'>Description</Label>
-                      <Input type='text' id='description_itinerary' onChange={this.onInputChange} />
                     </FormGroup>
                   </Col>
                 </Row>

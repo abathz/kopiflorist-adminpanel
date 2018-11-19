@@ -75,22 +75,19 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
 
   renderDataTable () {
     const { dataTable } = this.props.trip
-    console.log(dataTable)
     return _.map(dataTable, (data: any, index: number) => {
       if (_.isEmpty(data)) return <tr key={index}/>
       return _.map(data, (data: any, index: number) => {
         if (data.day === this.props.trip.day) {
           return (
-          <tr key={index}>
-            <td>{data.time}</td>
+            <tr key={index}>
+              <td>{data.time}</td>
               <td>{data.activity}</td>
-              <td>{data.description}</td>
-            <td><FontAwesomeIcon icon={faPen} /></td>
-          </tr>
+              <td><FontAwesomeIcon icon={faPen} /></td>
+            </tr>
           )
         }
       })
-
     })
   }
 
