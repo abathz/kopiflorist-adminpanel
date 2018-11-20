@@ -58,7 +58,8 @@ class CoffeTripList extends Component<PropsComponent, StateComponent> {
           <div className='mb-5' style={{ borderBottom: '2px solid #333' }} />
         </Col>
         <Col xs='12' className='text-right mb-3'>
-          <Link route='createcoffeetrip'><Button color='primary'>+ Add</Button></Link>
+          <Link route='createtrippackage'><Button className='mr-3' color='primary'>Add Trip Package</Button></Link>
+          <Link route='createcoffeetrip'><Button color='primary'>Add</Button></Link>
         </Col>
         <Col xs='12'>
           <Table className='text-center table-custom' hover={true} bordered={true}>

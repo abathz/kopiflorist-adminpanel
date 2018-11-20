@@ -65,7 +65,6 @@ class CreateCategoryProduct extends Component<PropsComponent, StateComponent> {
   }
 
   render () {
-    console.log(this.props.category_name)
     return (
       <>
         <Row>

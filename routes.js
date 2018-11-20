@@ -8,6 +8,7 @@ module.exports = routes()
   .add('coffeetriplist', '/coffee_trip', 'coffeetriplist')
   .add('createcoffeetrip', '/create_coffee_trip', 'createcoffeetrip')
   .add('editcoffeetrip', '/edit_coffee_trip/:id', 'editcoffeetrip')
+  .add('createtrippackage', '/create_trip_package', 'createtrippackage')
 
   // Product
   .add('productlist', '/product', 'productlist')

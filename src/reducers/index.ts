@@ -8,6 +8,7 @@ import BlogReducer from './BlogReducer'
 import BannerReducer from './BannerReducer'
 import AuthReducer from './AuthReducer'
 import PickupMethodReducer from './PickupMethodReducer'
+import TripPackageTypeReducer from './TripPackageTypeReducer'
 
 const rootReducer = combineReducers({
   product: ProductReducer,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   blog: BlogReducer,
   banner: BannerReducer,
   auth: AuthReducer,
-  pickupmethod: PickupMethodReducer
+  pickupmethod: PickupMethodReducer,
+  trippackage: TripPackageTypeReducer
 })
 
 export default rootReducer
