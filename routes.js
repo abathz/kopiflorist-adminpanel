@@ -36,3 +36,6 @@ module.exports = routes()
   .add('banner', '/banner', 'banner')
   .add('createbanner', '/create_banner', 'createbanner')
   .add('editbanner', '/edit_banner/:id', 'editbanner')
+
+  .add('pickupmethod', '/pickupmethod', 'pickupmethod')
+  .add('createpickupmethod', '/create_pickup_method', 'createpickupmethod')

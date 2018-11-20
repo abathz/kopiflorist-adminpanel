@@ -28,6 +28,7 @@ class Sidebar extends Component<{ logout: typeof logout }, {}> {
           <Link prefetch={true} route='couponlist'><li>Coupon</li></Link>
           <Link prefetch={true} route='bloglist'><li>Blog</li></Link>
           <Link prefetch={true} route='banner'><li>Home Banner</li></Link>
+          <Link prefetch={true} route='pickupmethod'><li>Pickup Method</li></Link>
         </ul>
         <div className='text-white text-hel-bold' style={{ cursor: 'pointer' }} onMouseDown={this.logout}>Sign Out</div>
       </div>

@@ -7,6 +7,7 @@ import CouponReducer from './CouponReducer'
 import BlogReducer from './BlogReducer'
 import BannerReducer from './BannerReducer'
 import AuthReducer from './AuthReducer'
+import PickupMethodReducer from './PickupMethodReducer'
 
 const rootReducer = combineReducers({
   product: ProductReducer,
@@ -16,7 +17,8 @@ const rootReducer = combineReducers({
   coupon: CouponReducer,
   blog: BlogReducer,
   banner: BannerReducer,
-  auth: AuthReducer
+  auth: AuthReducer,
+  pickupmethod: PickupMethodReducer
 })
 
 export default rootReducer
