@@ -58,7 +58,6 @@ class CreateTripPackageType extends Component<PropsComponent, StateComponent> {
     return _.map(allTripPackage, (data: any, index: number) => {
       return (
         <tr key={index}>
-          <td className='pt-3'>{data.id}</td>
           <td className='pt-3'>{data.package_name}</td>
           <td className='pt-3'>{data.min_participant}</td>
           <td className='pt-3'>{data.max_participant}</td>
@@ -97,7 +96,6 @@ class CreateTripPackageType extends Component<PropsComponent, StateComponent> {
             <Table className='text-center table-custom' hover={true} bordered={true}>
               <thead>
                 <tr>
-                  <th>No</th>
                   <th>Package Name</th>
                   <th>Min Participant</th>
                   <th>Max Participant</th>

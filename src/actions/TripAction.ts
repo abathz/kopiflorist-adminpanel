@@ -26,6 +26,9 @@ export const createTrip = (data: any) => async () => {
   formData.append('trip_date', data.trip_date)
   formData.append('duration', data.duration)
   formData.append('price', data.price)
+  for (const trip of data.trip_package) {
+    formData.append('trip_allowed_packages[]', trip)
+  }
   formData.append('itinerary', JSON.stringify(data.dataTable))
   for (const photo of data.main_photo) {
     formData.append('main_photo', photo)

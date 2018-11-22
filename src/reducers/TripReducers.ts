@@ -25,6 +25,7 @@ interface State {
   day: number
   time_itinerary: string
   activity_itinerary: string
+  trip_package: any[]
 }
 
 const INITAL_STATE: State = {
@@ -45,7 +46,8 @@ const INITAL_STATE: State = {
   dataTable: [],
   day: 0,
   time_itinerary: '',
-  activity_itinerary: ''
+  activity_itinerary: '',
+  trip_package: []
 }
 
 export default (state = INITAL_STATE, action: Action) => {

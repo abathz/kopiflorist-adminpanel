@@ -1,6 +1,6 @@
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { addDataTable, createTrip, updateDataTrip } from 'actions/index'
+import { addDataTable, createTrip, updateDataTrip, getAllTripPackage } from 'actions/index'
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { connect } from 'react-redux'
 import { Button, Col, Form, FormGroup, Input, Label, Row, Table } from 'reactstrap'
@@ -8,29 +8,42 @@ import _ from 'lodash'
 
 interface StateProps {
   trip: any
+  trippackage: any
 }
 
 interface DispatchProps {
   updateDataTrip: typeof updateDataTrip
   createTrip: typeof createTrip
   addDataTable: typeof addDataTable
+  getAllTripPackage: typeof getAllTripPackage
 }
 
 interface PropsComponent extends StateProps, DispatchProps { }
 
 interface StateComponent {
   duration_day: string
+  trip_package: any[]
+  arrTrip: any[]
 }
 
 class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
   constructor (props: any) {
     super(props)
 
-    this.state = { duration_day: '' }
+    this.state = {
+      duration_day: '',
+      trip_package: [],
+      arrTrip: []
+    }
 
     this.onInputChange = this.onInputChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
-    this.onAddClick = this.onAddClick.bind(this)
+    this.onAddItineraryClick = this.onAddItineraryClick.bind(this)
+    this.onTripPackageClicked = this.onTripPackageClicked.bind(this)
+  }
+
+  componentDidMount () {
+    this.props.getAllTripPackage()
   }
 
   onInputChange (e: ChangeEvent<HTMLInputElement>) {
@@ -51,7 +64,6 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
         for (let i = 0; i < arr.length; i ++) {
           arr[i] = Array()
         }
-
         this.props.updateDataTrip({ prop: 'dataTable', value: arr })
       })
     }
@@ -63,7 +75,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.createTrip(this.props.trip)
   }
 
-  onAddClick () {
+  onAddItineraryClick () {
     const data = {
       day: this.props.trip.day,
       time: this.props.trip.time_itinerary,
@@ -71,6 +83,30 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
       description: this.props.trip.description_itinerary
     }
     this.props.addDataTable(data)
+  }
+
+  onTripPackageClicked (selected: any) {
+    const index = this.state.trip_package.indexOf(selected)
+    if (index < 0) {
+      this.state.trip_package.push(selected)
+    } else {
+      this.state.trip_package.splice(index, 1)
+    }
+    this.props.updateDataTrip({ prop: 'trip_package', value: [...this.state.trip_package] })
+  }
+
+  renderTripPackageList () {
+    const { allTripPackage } = this.props.trippackage
+    if (!allTripPackage) return <div/>
+    return _.map(allTripPackage, (data: any, index: number) => {
+      return (
+        <FormGroup key={index} check={true}>
+          <Label check={true}>
+            <Input type='checkbox' onClick={this.onTripPackageClicked.bind(this, index + 1)} /> {data.package_name}
+          </Label>
+        </FormGroup>
+      )
+    })
   }
 
   renderDataTable () {
@@ -92,6 +128,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
   }
 
   render () {
+    console.log(this.props.trip)
     return (
       <>
         <Row>
@@ -175,12 +212,14 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
                 </Row>
                 <Row>
                   <Col xs='12'>
-                    <Button className='float-right' color='primary' onMouseDown={this.onAddClick}>Add</Button>
+                    <Button className='float-right' color='primary' onMouseDown={this.onAddItineraryClick}>Add</Button>
                   </Col>
                 </Row>
                 <div className='clearfix' />
               </FormGroup>
-              <FormGroup>
+              <Label className='label'>Trip Package</Label>
+              {this.renderTripPackageList()}
+              <FormGroup className='mt-3'>
                 <Label className='label' for='price'>Price/Guest</Label>
                 <Input type='text' id='price' onChange={this.onInputChange} />
               </FormGroup>
@@ -201,8 +240,13 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
   }
 }
 
-const mapStateToProps = ({ trip }: any) => {
-  return { trip }
+const mapStateToProps = ({ trip, trippackage }: any) => {
+  return { trip, trippackage }
 }
 
-export default connect(mapStateToProps, { updateDataTrip, createTrip, addDataTable })(CreateCoffeeTrip)
+export default connect(mapStateToProps, {
+  updateDataTrip,
+  createTrip,
+  addDataTable,
+  getAllTripPackage
+})(CreateCoffeeTrip)
