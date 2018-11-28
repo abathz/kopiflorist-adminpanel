@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import moment from 'moment'
 import { Button, Table, Row, Col } from 'reactstrap'
 import { Link } from 'routes'
 import { getAllTrip, deleteTrip } from 'actions/index'
@@ -32,12 +33,13 @@ class CoffeTripList extends Component<PropsComponent, StateComponent> {
     if (!allTrip) return ''
     return allTrip.map((_data: any) => {
       const date = _data.trip_date.substring(0, 10).split('-')
-      const tripDate = `${date[2]}-${date[1]}-${date[0]}`
+      const startDate = `${date[2]}-${date[1]}-${date[0]}`
+      const endDate = moment(new Date(`${date[0]}-${date[1]}-${date[2]}`)).add(_data.duration - 1, 'd').format('DD-MM-YYYY')
       return (
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>
           <td className='pt-3'>{_data.title}</td>
-          <td className='pt-3'>{tripDate} ({_data.duration === 1 ? 'Day Trip' : '3D2N'})</td>
+          <td className='pt-3'>{`${startDate} -- ${endDate}`}</td>
           <td className='pt-3'>{_data.address}</td>
           <td className='pt-3'>{_data.price}</td>
           <td className='pt-3'>{_data.availability ? 'Active' : 'Inactive'}</td>

@@ -128,7 +128,6 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
   }
 
   render () {
-    console.log(this.props.trip)
     return (
       <>
         <Row>
