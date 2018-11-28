@@ -32,7 +32,6 @@ class TextEditorBlog extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { blog } = this.props
-    console.log(blog)
     return (
       <>
         <Editor
@@ -46,12 +45,12 @@ class TextEditorBlog extends Component<PropsComponent, StateComponent> {
             image_title: true,
             file_picker_types: 'image',
             file_picker_callback: (cb: Function) => {
-              let tinymce: any
               let input: any = document.createElement('input')
               input.setAttribute('type', 'file')
               input.setAttribute('accept', 'image/*')
 
               input.onchange = function () {
+                let tinymce
                 let file = this.files[0]
 
                 let reader: any = new FileReader()
