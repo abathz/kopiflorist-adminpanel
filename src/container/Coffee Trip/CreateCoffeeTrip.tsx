@@ -8,7 +8,7 @@ import _ from 'lodash'
 
 interface StateProps {
   trip: any
-  trippackage: any
+  allTripPackage: any
 }
 
 interface DispatchProps {
@@ -77,10 +77,9 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
 
   onAddItineraryClick () {
     const data = {
-      day: this.props.trip.day,
+      day: Number(this.props.trip.day),
       time: this.props.trip.time_itinerary,
-      activity: this.props.trip.activity_itinerary,
-      description: this.props.trip.description_itinerary
+      activity: this.props.trip.activity_itinerary
     }
     this.props.addDataTable(data)
   }
@@ -96,7 +95,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
   }
 
   renderTripPackageList () {
-    const { allTripPackage } = this.props.trippackage
+    const { allTripPackage } = this.props
     if (!allTripPackage) return <div/>
     return _.map(allTripPackage, (data: any, index: number) => {
       return (
@@ -114,7 +113,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     return _.map(dataTable, (data: any, index: number) => {
       if (_.isEmpty(data)) return <tr key={index}/>
       return _.map(data, (data: any, index: number) => {
-        if (data.day === this.props.trip.day) {
+        if (data.day === Number(this.props.trip.day)) {
           return (
             <tr key={index}>
               <td>{data.time}</td>
@@ -211,7 +210,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
                 </Row>
                 <Row>
                   <Col xs='12'>
-                    <Button className='float-right' color='primary' onMouseDown={this.onAddItineraryClick}>Add</Button>
+                    <Button className='float-right' color='primary' onClick={this.onAddItineraryClick}>Add</Button>
                   </Col>
                 </Row>
                 <div className='clearfix' />
@@ -240,7 +239,8 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
 }
 
 const mapStateToProps = ({ trip, trippackage }: any) => {
-  return { trip, trippackage }
+  const { allTripPackage } = trippackage
+  return { trip, allTripPackage }
 }
 
 export default connect(mapStateToProps, {

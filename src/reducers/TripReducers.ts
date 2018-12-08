@@ -5,6 +5,8 @@ import {
   ADD_DATA_TABLE,
   GET_TRIP
 } from 'actions/types'
+import _ from 'lodash'
+import { stat } from 'fs'
 
 interface State {
   trip_name: string,
@@ -26,6 +28,7 @@ interface State {
   time_itinerary: string
   activity_itinerary: string
   trip_package: any[]
+  trip_package_edited: any[]
 }
 
 const INITAL_STATE: State = {
@@ -47,7 +50,8 @@ const INITAL_STATE: State = {
   day: 0,
   time_itinerary: '',
   activity_itinerary: '',
-  trip_package: []
+  trip_package: [],
+  trip_package_edited: []
 }
 
 export default (state = INITAL_STATE, action: Action) => {
@@ -60,6 +64,23 @@ export default (state = INITAL_STATE, action: Action) => {
     case GET_ALL_TRIP:
       return { ...state, allTrip: action.payload.data }
     case GET_TRIP:
+      let tripPackage = _.map(action.payload.data.trip_package, (data: any, index: number) => data.id)
+
+      let arr = Array(Number(action.payload.data.duration))
+      for (let i = 0; i < arr.length; i++) {
+        arr[i] = Array()
+      }
+      state.dataTable = arr
+
+      _.map(action.payload.data.itinerary, (data: any, index: number) => {
+        let dt = {
+          day: data.day,
+          time: data.time,
+          activity: data.activity
+        }
+        state.dataTable[data.day - 1].push(dt)
+      })
+
       return {
         ...state,
         trip_name: action.payload.data.title,
@@ -69,10 +90,10 @@ export default (state = INITAL_STATE, action: Action) => {
         duration: action.payload.data.duration,
         provide: action.payload.data.notes,
         price: action.payload.data.price,
-        dataTable: action.payload.data.itinerary,
         main_photo: action.payload.data.main_photo,
         other_photo: action.payload.data.other_photo,
-        availability: action.payload.data.availability
+        availability: action.payload.data.availability,
+        trip_package: tripPackage
       }
     default:
       return state

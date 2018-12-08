@@ -64,6 +64,9 @@ export const editTrip = (...data: any[]) => async (dispatch: Dispatch<any>) => {
   formData.append('trip_date', data[1].trip_date)
   formData.append('duration', data[1].duration)
   formData.append('price', data[1].price)
+  for (const trip of data[1].trip_package) {
+    formData.append('trip_allowed_packages[]', trip)
+  }
   formData.append('itinerary', JSON.stringify(data[1].dataTable))
   for (const photo of data[1].main_photo_edited) {
     formData.append('main_photo', photo)

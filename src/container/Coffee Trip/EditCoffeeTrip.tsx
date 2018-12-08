@@ -4,11 +4,19 @@ import { Button, Col, Form, FormGroup, Input, Label, Row, Table } from 'reactstr
 import _ from 'lodash'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { addDataTable, updateDataTrip, getTrip, editTrip, changeAvailabilityTrip } from 'actions/index'
+import {
+  addDataTable,
+  updateDataTrip,
+  getTrip,
+  editTrip,
+  changeAvailabilityTrip,
+  getAllTripPackage
+} from 'actions/index'
 
 interface StateProps {
   id: number
   trip: any
+  allTripPackage: any
 }
 
 interface DispatchProps {
@@ -17,26 +25,37 @@ interface DispatchProps {
   addDataTable: typeof addDataTable
   editTrip: typeof editTrip
   changeAvailabilityTrip: typeof changeAvailabilityTrip
+  getAllTripPackage: typeof getAllTripPackage
 }
 
 interface PropsComponent extends StateProps, DispatchProps { }
 
 interface StateComponent {
-  data: any
+  trip_package: any[]
 }
 
 class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
   constructor (props: any) {
     super(props)
 
+    this.state = { trip_package: [] }
+
     this.onInputChange = this.onInputChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
-    this.onAddClick = this.onAddClick.bind(this)
+    this.onAddItineraryClicked = this.onAddItineraryClicked.bind(this)
     this.onMouseDownButtonAvailability = this.onMouseDownButtonAvailability.bind(this)
   }
 
   componentDidMount () {
     this.props.getTrip(this.props.id)
+    this.props.getAllTripPackage()
+  }
+
+  componentDidUpdate () {
+    const { trip } = this.props
+    if (this.state.trip_package !== trip.trip_package) {
+      this.setState({ trip_package: trip.trip_package })
+    }
   }
 
   onInputChange (e: ChangeEvent<HTMLInputElement>) {
@@ -56,13 +75,23 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.editTrip(this.props.id, this.props.trip)
   }
 
-  onAddClick () {
+  onAddItineraryClicked () {
     const data = {
+      day: Number(this.props.trip.day),
       time: this.props.trip.time_itinerary,
-      activity: this.props.trip.activity_itinerary,
-      description: this.props.trip.description_itinerary
+      activity: this.props.trip.activity_itinerary
     }
     this.props.addDataTable(data)
+  }
+
+  onTripPackageClicked (selected: any) {
+    const index = this.state.trip_package.indexOf(selected)
+    if (index < 0) {
+      this.state.trip_package.push(selected)
+    } else {
+      this.state.trip_package.splice(index, 1)
+    }
+    this.props.updateDataTrip({ prop: 'trip_package', value: [...this.state.trip_package] })
   }
 
   onMouseDownButtonAvailability () {
@@ -73,15 +102,31 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     const { dataTable } = this.props.trip
     return _.map(dataTable, (data: any, index: number) => {
       if (_.isEmpty(data)) return <tr key={index} />
-      if (data.day === Number(this.props.trip.day)) {
-        return (
-          <tr key={index}>
-            <td>{data.time}</td>
-            <td>{data.activity}</td>
-            <td><FontAwesomeIcon icon={faPen} /></td>
-          </tr>
-        )
-      }
+      return _.map(data, (data: any, index: number) => {
+        if (data.day === Number(this.props.trip.day)) {
+          return (
+            <tr key={index}>
+              <td>{data.time}</td>
+              <td>{data.activity}</td>
+              <td><FontAwesomeIcon icon={faPen} /></td>
+            </tr>
+          )
+        }
+      })
+    })
+  }
+
+  renderTripPackageList () {
+    const { allTripPackage } = this.props
+    if (!allTripPackage) return <div />
+    return _.map(allTripPackage, (data: any, index: number) => {
+      return (
+        <FormGroup key={index} check={true}>
+          <Label check={true}>
+            <Input type='checkbox' checked={_.includes(this.state.trip_package, data.id)} onClick={this.onTripPackageClicked.bind(this, index + 1)} /> {data.package_name}
+          </Label>
+        </FormGroup>
+      )
     })
   }
 
@@ -99,6 +144,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { trip } = this.props
+    console.log(trip)
     if (!trip) return ''
     return (
       <>
@@ -183,11 +229,12 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
                 </Row>
                 <Row>
                   <Col xs='12'>
-                    <Button className='float-right' color='primary' onMouseDown={this.onAddClick}>Add</Button>
+                    <Button className='float-right' color='primary' onClick={this.onAddItineraryClicked}>Add</Button>
                   </Col>
                 </Row>
                 <div className='clearfix' />
               </FormGroup>
+              {this.renderTripPackageList()}
               <FormGroup>
                 <Label className='label' for='price'>Price/Guest</Label>
                 <Input type='text' id='price' value={trip.price} onChange={this.onInputChange} />
@@ -218,8 +265,9 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
   }
 }
 
-const mapStateToProps = ({ trip }: any) => {
-  return { trip }
+const mapStateToProps = ({ trip, trippackage }: any) => {
+  const { allTripPackage } = trippackage
+  return { trip, allTripPackage }
 }
 
 export default connect(mapStateToProps, {
@@ -227,5 +275,6 @@ export default connect(mapStateToProps, {
   addDataTable,
   getTrip,
   editTrip,
-  changeAvailabilityTrip
+  changeAvailabilityTrip,
+  getAllTripPackage
 })(EditCoffeeTrip)
