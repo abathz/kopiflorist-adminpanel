@@ -47,7 +47,7 @@ export const logout = () => {
 }
 
 const signUpAdminSuccess = () => {
-  window.location.href = '/'
+  window.location.href = '/dashboard'
 }
 
 const signInAdminSuccess = (res: any) => {
