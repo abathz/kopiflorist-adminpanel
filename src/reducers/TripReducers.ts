@@ -57,6 +57,10 @@ const INITAL_STATE: State = {
 export default (state = INITAL_STATE, action: Action) => {
   switch (action.type) {
     case UPDATE_DATA_TRIP:
+      if (action.payload.prop === 'trip_package') {
+        state.trip_package[Number(action.payload.value.index)].price = Number(action.payload.value.price)
+        return { ...state }
+      }
       return { ...state, [action.payload.prop]: action.payload.value }
     case ADD_DATA_TABLE:
       state.dataTable[Number(action.payload.day) - 1].push(action.payload)
@@ -64,8 +68,6 @@ export default (state = INITAL_STATE, action: Action) => {
     case GET_ALL_TRIP:
       return { ...state, allTrip: action.payload.data }
     case GET_TRIP:
-      let tripPackage = _.map(action.payload.data.trip_package, (data: any, index: number) => data.id)
-
       let arr = Array(Number(action.payload.data.duration))
       for (let i = 0; i < arr.length; i++) {
         arr[i] = Array()
@@ -93,7 +95,7 @@ export default (state = INITAL_STATE, action: Action) => {
         main_photo: action.payload.data.main_photo,
         other_photo: action.payload.data.other_photo,
         availability: action.payload.data.availability,
-        trip_package: tripPackage
+        trip_package: action.payload.data.trip_package
       }
     default:
       return state

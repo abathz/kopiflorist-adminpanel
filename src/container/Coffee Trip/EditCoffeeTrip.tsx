@@ -32,13 +32,19 @@ interface PropsComponent extends StateProps, DispatchProps { }
 
 interface StateComponent {
   trip_package: any[]
+  price_trip_package: number[]
+  isPackageChecked: boolean[]
 }
 
 class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
   constructor (props: any) {
     super(props)
 
-    this.state = { trip_package: [] }
+    this.state = {
+      trip_package: [],
+      price_trip_package: [],
+      isPackageChecked: []
+    }
 
     this.onInputChange = this.onInputChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
@@ -59,12 +65,18 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
   }
 
   onInputChange (e: ChangeEvent<HTMLInputElement>) {
+    let isPriceTripPackage = e.target.id.split('-')[0] === 'price_trip_package'
+    let indexPriceTripPackage = e.target.id.split('-')[1]
     if (e.target.id === 'main_photo_edited') {
       this.props.updateDataTrip({ prop: e.target.id, value: e.target.files })
       return
     }
     if (e.target.id === 'other_photo_edited') {
       this.props.updateDataTrip({ prop: e.target.id, value: e.target.files })
+      return
+    }
+    if (isPriceTripPackage) {
+      this.props.updateDataTrip({ prop: 'trip_package', value: { index: indexPriceTripPackage, price: e.target.value } })
       return
     }
     this.props.updateDataTrip({ prop: e.target.id, value: e.target.value })
@@ -88,8 +100,12 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     const index = this.state.trip_package.indexOf(selected)
     if (index < 0) {
       this.state.trip_package.push(selected)
+      this.state.isPackageChecked.push(true)
     } else {
       this.state.trip_package.splice(index, 1)
+      this.state.price_trip_package.splice(index, 1)
+      this.state.isPackageChecked.splice(index, 1)
+      this.props.updateDataTrip({ prop: 'price_trip_package', value: [...this.state.price_trip_package] })
     }
     this.props.updateDataTrip({ prop: 'trip_package', value: [...this.state.trip_package] })
   }
@@ -117,15 +133,26 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
   }
 
   renderTripPackageList () {
-    const { allTripPackage } = this.props
-    if (!allTripPackage) return <div />
-    return _.map(allTripPackage, (data: any, index: number) => {
+    const { trip } = this.props
+    if (!trip) return <div />
+    return _.map(trip.trip_package, (data: any, index: number) => {
+      if (!this.state.trip_package[index]) return ''
+      console.log()
       return (
-        <FormGroup key={index} check={true}>
-          <Label check={true}>
-            <Input type='checkbox' checked={_.includes(this.state.trip_package, data.id)} onClick={this.onTripPackageClicked.bind(this, index + 1)} /> {data.package_name}
-          </Label>
-        </FormGroup>
+        <div key={index}>
+          <FormGroup check={true}>
+            <Label check={true}>
+              <Input type='checkbox' checked={this.state.trip_package[index].id === data.id} onClick={this.onTripPackageClicked.bind(this, index + 1)} /> {data.package_name}
+            </Label>
+          </FormGroup>
+          {
+            this.state.trip_package[index].id === data.id
+            ? <FormGroup>
+                <Input type='text' id={`price_trip_package-${index}`} value={data.price} onChange={this.onInputChange} />
+              </FormGroup>
+            : <div/>
+          }
+        </div>
       )
     })
   }
@@ -235,11 +262,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
                 <div className='clearfix' />
               </FormGroup>
               {this.renderTripPackageList()}
-              <FormGroup>
-                <Label className='label' for='price'>Price/Guest</Label>
-                <Input type='text' id='price' value={trip.price} onChange={this.onInputChange} />
-              </FormGroup>
-              <FormGroup>
+              <FormGroup className='mt-2'>
                 <Label className='label' for='main_photo_edited'>Main Photo</Label>
                 <Input type='file' id='main_photo_edited' onChange={this.onInputChange} />
               </FormGroup>

@@ -71,7 +71,7 @@ class CoffeTripList extends Component<PropsComponent, StateComponent> {
                 <th>Trip Name</th>
                 <th>Time</th>
                 <th>Location</th>
-                <th>Price/Guest</th>
+                <th>Price/Package</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>

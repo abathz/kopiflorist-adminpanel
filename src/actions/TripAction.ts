@@ -2,6 +2,7 @@ import axios from 'axios'
 import querystring from 'querystring'
 import { Dispatch } from 'redux'
 import { UPDATE_DATA_TRIP, GET_ALL_TRIP, ADD_DATA_TABLE, GET_TRIP } from 'actions/types'
+import _ from 'lodash'
 
 export const updateDataTrip = ({ prop, value }: any) => (dispatch: Dispatch<any>) => {
   dispatch({
@@ -17,30 +18,32 @@ export const addDataTable = (data: any) => (dispatch: Dispatch<any>) => {
   })
 }
 
-export const createTrip = (data: any) => async () => {
+export const createTrip = (newData: any) => async () => {
   const formData = new FormData()
-  formData.append('trip_name', data.trip_name)
-  formData.append('description', data.description)
-  formData.append('location', data.location)
-  formData.append('provide', data.provide)
-  formData.append('trip_date', data.trip_date)
-  formData.append('duration', data.duration)
-  formData.append('price', data.price)
-  for (const trip of data.trip_package) {
-    formData.append('trip_allowed_packages[]', trip)
-  }
-  formData.append('itinerary', JSON.stringify(data.dataTable))
-  for (const photo of data.main_photo) {
+  let arrTripPackage: any[] = _.map(newData.trip_package, (data: any, index: number) => {
+    return { id: data, price: newData.price_trip_package[index] }
+  })
+  formData.append('trip_name', newData.trip_name)
+  formData.append('description', newData.description)
+  formData.append('location', newData.location)
+  formData.append('provide', newData.provide)
+  formData.append('trip_date', newData.trip_date)
+  formData.append('duration', newData.duration)
+  formData.append('trip_allowed_packages[]', JSON.stringify(arrTripPackage))
+  formData.append('itinerary', JSON.stringify(newData.dataTable))
+  for (const photo of newData.main_photo) {
     formData.append('main_photo', photo)
   }
-  for (const photo of data.other_photo) {
+  for (const photo of newData.other_photo) {
     formData.append('other_photo', photo)
   }
+
   await axios.post('/create_trip', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
   })
+
   await createTripSuccess()
 }
 
@@ -56,6 +59,9 @@ export const getTrip = (id: number) => async (dispatch: Dispatch<any>) => {
 
 export const editTrip = (...data: any[]) => async (dispatch: Dispatch<any>) => {
   const formData = new FormData()
+  let arrTripPackage: any[] = _.map(data[1].trip_package, (data: any) => {
+    return { id: data.id, price: data.price }
+  })
   formData.append('id', data[0])
   formData.append('trip_name', data[1].trip_name)
   formData.append('description', data[1].description)
@@ -63,10 +69,7 @@ export const editTrip = (...data: any[]) => async (dispatch: Dispatch<any>) => {
   formData.append('provide', data[1].provide)
   formData.append('trip_date', data[1].trip_date)
   formData.append('duration', data[1].duration)
-  formData.append('price', data[1].price)
-  for (const trip of data[1].trip_package) {
-    formData.append('trip_allowed_packages[]', trip)
-  }
+  formData.append('trip_allowed_packages[]', JSON.stringify(arrTripPackage))
   formData.append('itinerary', JSON.stringify(data[1].dataTable))
   for (const photo of data[1].main_photo_edited) {
     formData.append('main_photo', photo)

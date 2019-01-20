@@ -23,7 +23,10 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent {
   duration_day: string
   trip_package: any[]
+  price_trip_package: number[]
   arrTrip: any[]
+  packageChecked: number
+  isPackageChecked: boolean[]
 }
 
 class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
@@ -33,13 +36,15 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.state = {
       duration_day: '',
       trip_package: [],
-      arrTrip: []
+      price_trip_package: [],
+      arrTrip: [],
+      packageChecked: 0,
+      isPackageChecked: []
     }
 
     this.onInputChange = this.onInputChange.bind(this)
     this.onSubmit = this.onSubmit.bind(this)
     this.onAddItineraryClick = this.onAddItineraryClick.bind(this)
-    this.onTripPackageClicked = this.onTripPackageClicked.bind(this)
   }
 
   componentDidMount () {
@@ -67,6 +72,11 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
         this.props.updateDataTrip({ prop: 'dataTable', value: arr })
       })
     }
+    if (e.target.id === 'price_trip_package') {
+      this.state.price_trip_package.push(Number(e.target.value))
+      this.props.updateDataTrip({ prop: 'price_trip_package', value: [...this.state.price_trip_package] })
+      return
+    }
     this.props.updateDataTrip({ prop: e.target.id, value: e.target.value })
   }
 
@@ -84,12 +94,16 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.addDataTable(data)
   }
 
-  onTripPackageClicked (selected: any) {
+  onTripPackageClicked = (selected: any) => (e: any) => {
     const index = this.state.trip_package.indexOf(selected)
     if (index < 0) {
       this.state.trip_package.push(selected)
+      this.state.isPackageChecked.push(true)
     } else {
       this.state.trip_package.splice(index, 1)
+      this.state.price_trip_package.splice(index, 1)
+      this.state.isPackageChecked.splice(index, 1)
+      this.props.updateDataTrip({ prop: 'price_trip_package', value: [...this.state.price_trip_package] })
     }
     this.props.updateDataTrip({ prop: 'trip_package', value: [...this.state.trip_package] })
   }
@@ -99,11 +113,20 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     if (!allTripPackage) return <div/>
     return _.map(allTripPackage, (data: any, index: number) => {
       return (
-        <FormGroup key={index} check={true}>
-          <Label check={true}>
-            <Input type='checkbox' onClick={this.onTripPackageClicked.bind(this, index + 1)} /> {data.package_name}
-          </Label>
-        </FormGroup>
+        <div key={index}>
+          <FormGroup check={true}>
+            <Label check={true}>
+              <Input type='checkbox' onClick={this.onTripPackageClicked(data.id)} /> {data.package_name}
+            </Label>
+          </FormGroup>
+          {
+            this.state.isPackageChecked[index] && this.state.isPackageChecked
+            ? <FormGroup>
+                <Input type='text' id='price_trip_package' onBlur={this.onInputChange}/>
+              </FormGroup>
+            : <div/>
+          }
+        </div>
       )
     })
   }
@@ -217,11 +240,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
               </FormGroup>
               <Label className='label'>Trip Package</Label>
               {this.renderTripPackageList()}
-              <FormGroup className='mt-3'>
-                <Label className='label' for='price'>Price/Guest</Label>
-                <Input type='text' id='price' onChange={this.onInputChange} />
-              </FormGroup>
-              <FormGroup>
+              <FormGroup className='mt-2'>
                 <Label className='label' for='main_photo'>Main Photo</Label>
                 <Input type='file' id='main_photo' onChange={this.onInputChange} />
               </FormGroup>
