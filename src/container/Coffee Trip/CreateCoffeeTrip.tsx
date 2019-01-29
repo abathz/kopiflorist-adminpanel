@@ -51,6 +51,13 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.getAllTripPackage()
   }
 
+  componentDidUpdate () {
+    const { allTripPackage } = this.props
+    if (this.state.isPackageChecked.length === 0) {
+      this.setState({ isPackageChecked: Array(allTripPackage.length).fill(false) })
+    }
+  }
+
   onInputChange (e: ChangeEvent<HTMLInputElement>) {
     if (e.target.id === 'main_photo') {
       this.props.updateDataTrip({ prop: e.target.id, value: e.target.files })
@@ -98,14 +105,14 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     const index = this.state.trip_package.indexOf(selected)
     if (index < 0) {
       this.state.trip_package.push(selected)
-      this.state.isPackageChecked.push(true)
+      this.state.isPackageChecked[selected - 1] = true
     } else {
       this.state.trip_package.splice(index, 1)
       this.state.price_trip_package.splice(index, 1)
-      this.state.isPackageChecked.splice(index, 1)
-      this.props.updateDataTrip({ prop: 'price_trip_package', value: [...this.state.price_trip_package] })
+      this.state.isPackageChecked[selected - 1] = false
+      this.props.updateDataTrip({ prop: 'price_trip_package', value: { isCreated: true, data: [...this.state.price_trip_package] } })
     }
-    this.props.updateDataTrip({ prop: 'trip_package', value: [...this.state.trip_package] })
+    this.props.updateDataTrip({ prop: 'trip_package', value: { isCreated: true, data: [...this.state.trip_package] } })
   }
 
   renderTripPackageList () {
@@ -120,7 +127,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
             </Label>
           </FormGroup>
           {
-            this.state.isPackageChecked[index] && this.state.isPackageChecked
+            this.state.isPackageChecked[index]
             ? <FormGroup>
                 <Input type='text' id='price_trip_package' onBlur={this.onInputChange}/>
               </FormGroup>

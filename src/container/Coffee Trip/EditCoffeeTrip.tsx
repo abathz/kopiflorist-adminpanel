@@ -142,7 +142,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
         <div key={index}>
           <FormGroup check={true}>
             <Label check={true}>
-              <Input type='checkbox' checked={this.state.trip_package[index].id === data.id} onClick={this.onTripPackageClicked.bind(this, index + 1)} /> {data.package_name}
+              <Input type='checkbox' checked={this.state.trip_package[index].id === data.id} /> {data.package_name}
             </Label>
           </FormGroup>
           {
