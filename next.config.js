@@ -2,6 +2,8 @@ const path = require('path')
 const withCss = require('@zeit/next-css')
 const withSass = require('@zeit/next-sass')
 const withTypescript = require('@zeit/next-typescript')
+const LodashModuleReplacementPlugin = require('lodash-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = withTypescript(withSass(withCss({
   webpack (config, options) {
