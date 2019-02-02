@@ -13,6 +13,9 @@ module.exports = withTypescript(withSass(withCss({
       routes: path.resolve(__dirname, './routes')
     }
 
+    config.plugins.push(new LodashModuleReplacementPlugin())
+    config.plugins.push(new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/))
+
     return config
   }
 })))
