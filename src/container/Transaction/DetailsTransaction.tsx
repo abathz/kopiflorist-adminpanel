@@ -69,7 +69,8 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
                 <Col xs='9'>
                   <div className='d-flex flex-column'>
                     <span className='text-l text-black text-hel-95'>{data.name}</span>
-                    <span className='text-m text-black'>Rp {data.price}</span>
+                    <span className='text-m text-black'>{data.category}</span>
+                    <span className='text-ml text-black'>Rp {data.price}</span>
                   </div>
                 </Col>
               </Row>
