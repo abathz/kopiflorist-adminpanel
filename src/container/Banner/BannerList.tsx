@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Table, Row, Col } from 'reactstrap'
 import { Link } from 'routes'
-import { getAllBanner,deleteBanner } from 'actions/index'
+import { getAllBanner,deleteBanner } from 'actions'
 
 interface StateProps {
   allBanner: any
@@ -31,7 +31,6 @@ class Banner extends Component<PropsComponent, StateComponent> {
     const { allBanner } = this.props
     if (!allBanner) return ''
     return allBanner.map((_data: any) => {
-      console.log(_data.availability)
       return (
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>

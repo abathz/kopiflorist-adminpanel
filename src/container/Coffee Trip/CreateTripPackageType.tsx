@@ -1,7 +1,7 @@
 import React, { Component, ChangeEvent, FormEvent } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Form, FormGroup, Label, Input, Button, Table } from 'reactstrap'
-import { updateDataPackage, getAllTripPackage, createTripPackage, deleteTripPackage } from 'actions/index'
+import { updateDataPackage, getAllTripPackage, createTripPackage, deleteTripPackage } from 'actions'
 import _ from 'lodash'
 
 interface StateProps {

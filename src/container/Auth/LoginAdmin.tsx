@@ -2,7 +2,7 @@ import React, { Component, FormEvent, ChangeEvent } from 'react'
 import { connect } from 'react-redux'
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap'
 import { Link } from 'routes'
-import { updateDataLogin, signInAdmin } from 'actions/index'
+import { updateDataLogin, signInAdmin } from 'actions'
 
 interface StateProps {
   auth: any

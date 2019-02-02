@@ -11,7 +11,7 @@ import {
   tripUnchecked,
   createDiscount,
   resetStateDiscount
-} from 'actions/index'
+} from 'actions'
 
 interface StateProps {
   discount: any

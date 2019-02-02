@@ -1,7 +1,7 @@
 const routes = require('next-routes')
 
 module.exports = routes()
-  .add('home', '/dashboard', 'home')
+  .add('/dashboard', 'transactionlist')
   .add('signup', '/signup', 'signup')
 
   // Coffee Trip
@@ -38,5 +38,9 @@ module.exports = routes()
   .add('createbanner', '/create_banner', 'createbanner')
   .add('editbanner', '/edit_banner/:id', 'editbanner')
 
+  // Pickup Method
   .add('pickupmethod', '/pickupmethod', 'pickupmethod')
   .add('createpickupmethod', '/create_pickup_method', 'createpickupmethod')
+
+  //
+  .add('detailstransaction', '/invoice/:id', 'detailstransaction')

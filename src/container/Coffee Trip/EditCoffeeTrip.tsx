@@ -11,7 +11,7 @@ import {
   editTrip,
   changeAvailabilityTrip,
   getAllTripPackage
-} from 'actions/index'
+} from 'actions'
 
 interface StateProps {
   id: number

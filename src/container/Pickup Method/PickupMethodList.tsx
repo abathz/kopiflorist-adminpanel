@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Button, Table } from 'reactstrap'
 import { Link } from 'routes'
-import { getAllPickupMethod } from 'actions/index'
+import { getAllPickupMethod } from 'actions'
 import _ from 'lodash'
 
 interface StateProps {

@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Table, Row, Col } from 'reactstrap'
 import { Link } from 'routes'
-import { getAllBlog, deleteBlog } from 'actions/index'
+import { getAllBlog, deleteBlog } from 'actions'
+import moment from 'moment'
 
 interface StateProps {
   allBlog: any
@@ -30,8 +31,8 @@ class BlogList extends Component<PropsComponent, StateComponent> {
     const { allBlog } = this.props
     if (!allBlog) return ''
     return allBlog.map((_data: any) => {
-      const dateCreated = _data.date_created.substring(0, 10).split('-')
-      const date = `${dateCreated[2]}-${dateCreated[1]}-${dateCreated[0]}`
+      const dateCreated = _data.date_created.substring(0, 10)
+      const date = moment(dateCreated).format('DD M YYYY')
       return (
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>

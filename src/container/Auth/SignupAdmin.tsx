@@ -1,7 +1,7 @@
 import React, { Component, FormEvent, ChangeEvent } from 'react'
 import { connect } from 'react-redux'
 import { Container, Form, FormGroup, Label, Input, Button } from 'reactstrap'
-import { updateDataSignup, signUpAdmin } from 'actions/index'
+import { updateDataSignup, signUpAdmin } from 'actions'
 
 interface StateProps {
   auth: any

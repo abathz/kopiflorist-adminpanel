@@ -1,7 +1,7 @@
 import React, { Component, FormEvent, ChangeEvent } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap'
-import { updateDataPickupMethod, createPickupMethod } from 'actions/index'
+import { updateDataPickupMethod, createPickupMethod } from 'actions'
 
 interface StateProps {
   pickupmethod: any

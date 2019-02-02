@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Table, Button, Row, Col } from 'reactstrap'
 import { Link } from 'routes'
-import { getAllProduct, getCategory, deleteProduct } from 'actions/index'
+import { getAllProduct, getCategory, deleteProduct } from 'actions'
 
 interface StateProps {
   allProduct: []

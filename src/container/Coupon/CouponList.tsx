@@ -2,7 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Table, Row, Col } from 'reactstrap'
 import { Link } from 'routes'
-import { getAllCoupon, deleteCoupon } from 'actions/index'
+import { getAllCoupon, deleteCoupon } from 'actions'
+import moment from 'moment'
 
 interface StateProps {
   allCoupon: any
@@ -30,10 +31,10 @@ class CouponList extends Component<PropsComponent, StateComponent> {
     const { allCoupon } = this.props
     if (!allCoupon) return ''
     return allCoupon.map((_data: any) => {
-      const arrStartDate = _data.date_from.substring(0, 10).split('-')
-      const startDate = `${arrStartDate[2]}-${arrStartDate[1]}-${arrStartDate[0]}`
-      const arrEndDate = _data.date_to.substring(0, 10).split('-')
-      const endDate = `${arrEndDate[2]}-${arrEndDate[1]}-${arrEndDate[0]}`
+      const dateFrom = _data.date_from.substring(0, 10)
+      const dateTo = _data.date_to.substring(0, 10)
+      const startDate = moment(dateFrom).format('DD M YYYY')
+      const endDate = moment(dateTo).format('DD M YYYY')
       return (
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>

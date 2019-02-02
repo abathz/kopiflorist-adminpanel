@@ -1,7 +1,7 @@
 import React, { Component, ChangeEvent, FormEvent } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Form, FormGroup, Label, Input, Button } from 'reactstrap'
-import { getProduct, updateDataProduct, getCategory, editProduct, changeAvailabilityProduct } from 'actions/index'
+import { getProduct, updateDataProduct, getCategory, editProduct, changeAvailabilityProduct } from 'actions'
 
 interface StateProps {
   id: any

@@ -5,7 +5,7 @@ import {
   updateDataProduct,
   getCategory,
   createProduct
-} from 'actions/index'
+} from 'actions'
 
 interface StateProps {
   product: any,

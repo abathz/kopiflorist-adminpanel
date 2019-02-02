@@ -1,6 +1,6 @@
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { addDataTable, createTrip, updateDataTrip, getAllTripPackage } from 'actions/index'
+import { addDataTable, createTrip, updateDataTrip, getAllTripPackage } from 'actions'
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { connect } from 'react-redux'
 import { Button, Col, Form, FormGroup, Input, Label, Row, Table } from 'reactstrap'

@@ -1,7 +1,7 @@
 import React, { Component, FormEvent, ChangeEvent } from 'react'
 import { connect } from 'react-redux'
 import { Button, Row, Col, Form, Label, FormGroup, Input } from 'reactstrap'
-import { updateDataBanner, createBanner } from 'actions/index'
+import { updateDataBanner, createBanner } from 'actions'
 
 interface StateProps {
   banner: any

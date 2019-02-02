@@ -1,7 +1,7 @@
 import React, { Component, FormEvent, ChangeEvent } from 'react'
 import { connect } from 'react-redux'
 import { Button, Row, Col, Form, Label, FormGroup, Input, Table } from 'reactstrap'
-import { updateDataCoupon, createCoupon } from 'actions/index'
+import { updateDataCoupon, createCoupon } from 'actions'
 
 interface StateProps {
   coupon: any

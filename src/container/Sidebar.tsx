@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'routes'
-import { logout } from 'actions/index'
+import { logout } from 'actions'
 
 class Sidebar extends Component<{ logout: typeof logout }, {}> {
   constructor (props: any) {
@@ -20,7 +20,7 @@ class Sidebar extends Component<{ logout: typeof logout }, {}> {
         <p className='text-hel-95 text-l text-white mt-4'>Admin</p>
         <img src='/static/img/logo.png' alt='Kopi Florist'/>
         <ul className='list-sidebar text-right mt-4'>
-          <Link prefetch={true} route='home'><li>Transaction</li></Link>
+          <Link prefetch={true} route='/dashboard'><li>Transaction</li></Link>
           <Link prefetch={true} route='coffeetriplist'><li>Coffee Trip</li></Link>
           <Link prefetch={true} route='productlist'><li>Product</li></Link>
           <Link prefetch={true} route='useraccountlist'><li>User Account</li></Link>

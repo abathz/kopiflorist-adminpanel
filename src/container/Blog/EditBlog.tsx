@@ -2,7 +2,7 @@ import React, { Component, FormEvent, ChangeEvent } from 'react'
 import { connect } from 'react-redux'
 import TextEditorBlog from './TextEditorBlog'
 import { Button, Row, Col, Form, Label, FormGroup, Input } from 'reactstrap'
-import { getBlog, updateDataBlog, editBlog, resetStateBlog } from 'actions/index'
+import { getBlog, updateDataBlog, editBlog, resetStateBlog } from 'actions'
 
 interface StateProps {
   id: any

@@ -1,15 +1,51 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Table, Button } from 'reactstrap'
+import { getAllInvoices } from 'actions'
+import _ from 'lodash'
+import moment from 'moment'
+import { Link } from 'routes'
 
-interface StateProps { }
+interface StateProps {
+  allInvoices: any[]
+}
 
-interface DispatchProps { }
+interface DispatchProps {
+  getAllInvoices: typeof getAllInvoices
+}
 
 interface PropsComponent extends StateProps, DispatchProps { }
 
 interface StateComponent { }
 
 class TransactionList extends Component<PropsComponent, StateComponent> {
+  componentDidMount () {
+    this.props.getAllInvoices()
+  }
+
+  renderDataTable () {
+    const { allInvoices } = this.props
+    return _.map(allInvoices, (data: any, index: number) => {
+      let date = moment(data.createdAt).format('DD MMMM YYYY')
+      let time = moment(data.createdAt).format('HH:SS')
+      return (
+        <tr key={index}>
+          <td style={{ paddingTop: '20px' }}>{data.id}</td>
+          <td style={{ paddingTop: '20px' }}>{data.invoice_code}</td>
+          <td style={{ paddingTop: '20px' }}>{data.user.name}</td>
+          <td style={{ paddingTop: '20px' }}>{date} ({time})</td>
+          <td style={{ paddingTop: '20px' }}>{data.total_price}</td>
+          <td>
+            <Link route='detailstransaction' params={{ id: data.id }}><Button color='info'>Details</Button></Link>
+          </td>
+          <td>
+            <Button>Success</Button>
+          </td>
+        </tr>
+      )
+    })
+  }
+
   render () {
     return (
       <>
@@ -20,51 +56,15 @@ class TransactionList extends Component<PropsComponent, StateComponent> {
             <tr>
               <th>Transaction ID</th>
               <th>Transaction Code</th>
-              <th style={{ paddingBottom: '12px' }}>User</th>
-              <th style={{ paddingBottom: '12px' }}>Order Date & Time</th>
-              <th>Coffee Trip & Product</th>
-              <th style={{ paddingBottom: '12px' }}>Quantity/Guest</th>
+              <th>User</th>
+              <th>Order Date & Time</th>
               <th>Total Price</th>
-              <th style={{ paddingBottom: '12px' }}>Status</th>
+              <th>Action</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>1</td>
-              <td>P123456</td>
-              <td>Nicky Oenrob</td>
-              <td>15 August 2018 (12.21)</td>
-              <td>Dewi Rengganis</td>
-              <td>3</td>
-              <td>375.000</td>
-              <td>
-                <Button>Success</Button>
-              </td>
-            </tr>
-            <tr>
-              <td>2</td>
-              <td>P123456</td>
-              <td>Nicky Oenrob</td>
-              <td>15 August 2018 (12.21)</td>
-              <td>Dewi Rengganis</td>
-              <td>3</td>
-              <td>375.000</td>
-              <td>
-                <Button>Success</Button>
-              </td>
-            </tr>
-            <tr>
-              <td>3</td>
-              <td>P123456</td>
-              <td>Nicky Oenrob</td>
-              <td>15 August 2018 (12.21)</td>
-              <td>Dewi Rengganis</td>
-              <td>3</td>
-              <td>375.000</td>
-              <td>
-                <Button>Success</Button>
-              </td>
-            </tr>
+            {this.renderDataTable()}
           </tbody>
         </Table>
       </>
@@ -72,4 +72,10 @@ class TransactionList extends Component<PropsComponent, StateComponent> {
   }
 }
 
-export default TransactionList
+const mapStateToProps = ({ transaction }: any) => {
+  const { allInvoices } = transaction
+
+  return { allInvoices }
+}
+
+export default connect(mapStateToProps, { getAllInvoices })(TransactionList)

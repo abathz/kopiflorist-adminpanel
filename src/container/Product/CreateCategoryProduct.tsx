@@ -6,7 +6,7 @@ import {
   createCategory,
   getCategory,
   deleteCategory
-} from 'actions/index'
+} from 'actions'
 
 interface StateProps {
   category_name: string,

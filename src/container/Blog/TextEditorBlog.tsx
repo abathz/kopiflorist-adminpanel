@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateDataBlog } from 'actions/index'
+import { updateDataBlog } from 'actions'
 import { Editor } from '@tinymce/tinymce-react'
 
 interface StateProps {
@@ -50,7 +50,8 @@ class TextEditorBlog extends Component<PropsComponent, StateComponent> {
               input.setAttribute('accept', 'image/*')
 
               input.onchange = function () {
-                let tinymce
+                // tslint:disable-next-line:no-empty
+                let tinymce: any
                 let file = this.files[0]
 
                 let reader: any = new FileReader()

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import { Button, Table, Row, Col } from 'reactstrap'
 import { Link } from 'routes'
-import { getAllTrip, deleteTrip } from 'actions/index'
+import { getAllTrip, deleteTrip } from 'actions'
 
 interface StateProps {
   allTrip: any
@@ -32,9 +32,9 @@ class CoffeTripList extends Component<PropsComponent, StateComponent> {
     const { allTrip } = this.props
     if (!allTrip) return ''
     return allTrip.map((_data: any) => {
-      const date = _data.trip_date.substring(0, 10).split('-')
-      const startDate = `${date[2]}-${date[1]}-${date[0]}`
-      const endDate = moment(new Date(`${date[0]}-${date[1]}-${date[2]}`)).add(_data.duration - 1, 'd').format('DD-MM-YYYY')
+      const tripDate = _data.trip_date.substring(0, 10)
+      let startDate = moment(tripDate).format('DD MMMM YYYY')
+      let endDate = moment(tripDate).add(_data.duration - 1, 'd').format('DD MMMM YYYY')
       return (
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>
