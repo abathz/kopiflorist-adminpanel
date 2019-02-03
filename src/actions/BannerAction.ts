@@ -13,6 +13,7 @@ export const updateDataBanner = ({ prop, value }: any) => (dispatch: Dispatch<an
 export const createBanner = (data: any) => async () => {
   const formData = new FormData()
   formData.append('banner_title', data.banner_title)
+  formData.append('banner_url', data.banner_url)
   for (const photo of data.photo) {
     formData.append('photo', photo)
   }
@@ -41,6 +42,7 @@ export const editBanner = (data: any) => async (dispatch: Dispatch<any>) => {
   const formData = new FormData()
   formData.append('id', data.id)
   formData.append('banner_title', data.banner_title)
+  formData.append('banner_url', data.banner_url)
   for (const photo of data.photo_edited) {
     formData.append('photo', photo)
   }

@@ -38,7 +38,6 @@ class CreateBanner extends Component<PropsComponent, StateComponent> {
   }
 
   render () {
-    console.log(this.props.banner)
     return (
       <>
         <Row>
@@ -52,7 +51,11 @@ class CreateBanner extends Component<PropsComponent, StateComponent> {
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Label className='label' for='banner_title'>Banner Name</Label>
-                <Input type='text' id='banner_title' onChange={this.onInputChange}/>
+                <Input type='text' id='banner_title' onChange={this.onInputChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label className='label' for='banner_url'>URL</Label>
+                <Input type='text' id='banner_url' onChange={this.onInputChange} />
               </FormGroup>
               <FormGroup>
                 <Label className='label' for='photo'>Photo</Label>

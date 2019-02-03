@@ -36,7 +36,6 @@ class LoginAdmin extends Component<PropsComponent, StateComponent> {
   }
 
   render () {
-    console.log(this.props.auth)
     return (
       <Container>
         <div className='d-flex flex-column align-items-center pt-5' style={{ height: '100vh' }}>

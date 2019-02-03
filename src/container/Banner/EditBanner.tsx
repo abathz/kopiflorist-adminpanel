@@ -48,6 +48,7 @@ class EditBanner extends Component<PropsComponent, StateComponent> {
     const data = {
       id: this.props.id,
       banner_title: this.props.banner.banner_title,
+      banner_url: this.props.banner.banner_url,
       photo_edited: this.props.banner.photo_edited
     }
     this.props.editBanner(data)
@@ -74,6 +75,10 @@ class EditBanner extends Component<PropsComponent, StateComponent> {
               <FormGroup>
                 <Label className='label' for='banner_title'>Banner Name</Label>
                 <Input type='text' id='banner_title' value={banner.banner_title} onChange={this.onInputChange}/>
+              </FormGroup>
+              <FormGroup>
+                <Label className='label' for='banner_url'>URL</Label>
+                <Input type='text' id='banner_url' value={banner.banner_url} onChange={this.onInputChange} />
               </FormGroup>
               <img className='img-fluid' src={banner.photo} alt={banner.banner_title}/>
               <FormGroup>

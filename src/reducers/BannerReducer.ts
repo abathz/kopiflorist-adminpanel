@@ -2,6 +2,7 @@ import { Action, UPDATE_DATA_BANNER, GET_ALL_BANNER, GET_BANNER } from 'actions/
 
 interface State {
   banner_title: string
+  banner_url: string
   photo: any
   photo_edited: []
   allBanner: []
@@ -11,6 +12,7 @@ interface State {
 
 const INITIAL_STATE: State = {
   banner_title: '',
+  banner_url: '',
   photo: '',
   photo_edited: [],
   allBanner: [],
@@ -28,6 +30,7 @@ export default (state = INITIAL_STATE, action: Action) => {
       return {
         ...state,
         banner_title: action.payload.data.name,
+        banner_url: action.payload.data.url,
         photo: action.payload.data.photo,
         availability: action.payload.data.availability
       }
