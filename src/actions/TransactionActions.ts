@@ -1,6 +1,14 @@
 import axios from 'axios'
+import querystring from 'querystring'
 import { Dispatch } from 'redux'
-import { GET_ALL_INVOICES, GET_INVOICE } from './types'
+import { GET_ALL_INVOICES, GET_INVOICE, UPDATE_DATA_INVOICE } from './types'
+
+export const updateDataInvoice = ({ prop, value }: any) => (dispatch: Dispatch<any>) => {
+  dispatch({
+    type: UPDATE_DATA_INVOICE,
+    payload: { prop, value }
+  })
+}
 
 export const getAllInvoices = () => async (dispatch: Dispatch<any>) => {
   const res = await axios.get('/invoices')
@@ -12,6 +20,14 @@ export const getInvoice = (id: number) => async (dispatch: Dispatch<any>) => {
   const res = await axios.get(`/invoice/${id}`)
 
   await getInvoiceSuccess(dispatch, res)
+}
+
+export const updateShipping = (data: any) => async () => {
+  let idInvoice = data.idInvoice
+  let awb = data.awb
+  await axios.patch(`/invoice/${idInvoice}/shipping`, querystring.stringify({ awb }))
+
+  await updateShippingSuccess()
 }
 
 const getAllInvoicesSuccess = (dispatch: Dispatch<any>, res: any) => {
@@ -26,4 +42,8 @@ const getInvoiceSuccess = (dispatch: Dispatch<any>, res: any) => {
     type: GET_INVOICE,
     payload: res.data
   })
+}
+
+const updateShippingSuccess = () => {
+  window.location.reload()
 }

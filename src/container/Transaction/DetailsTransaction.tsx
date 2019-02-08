@@ -1,18 +1,21 @@
-import React, { Component } from 'react'
+import React, { Component, ChangeEvent } from 'react'
 import { connect } from 'react-redux'
-import { getInvoice } from 'actions'
+import { getInvoice, updateShipping, updateDataInvoice } from 'actions'
 import _ from 'lodash'
-import { Col, Row, Button } from 'reactstrap'
+import { Col, Row, Button, FormGroup, Label, Input } from 'reactstrap'
 import { Link } from 'routes'
 import moment from 'moment'
 
 interface StateProps {
   id: number
   invoice: any
+  transaction: any
 }
 
 interface DispatchProps {
   getInvoice: typeof getInvoice
+  updateShipping: typeof updateShipping
+  updateDataInvoice: typeof updateDataInvoice
 }
 
 interface PropsComponent extends StateProps, DispatchProps {}
@@ -22,6 +25,136 @@ interface StateComponent {}
 class DetailsTransaction extends Component<PropsComponent, StateComponent> {
   componentDidMount () {
     this.props.getInvoice(this.props.id)
+  }
+
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    this.props.updateDataInvoice({ prop: e.target.id, value: e.target.value })
+  }
+
+  onSaveClicked = () => {
+    const { transaction } = this.props
+    let data = {
+      idInvoice: transaction.invoice.id,
+      awb: transaction.awb
+    }
+
+    this.props.updateShipping(data)
+  }
+
+  transactionStatus () {
+    const { invoice } = this.props
+    const paymentStatus = invoice.payment_status
+    const paymentDetails = invoice.payment_details
+    switch (paymentStatus) {
+      case 0:
+        if (paymentDetails !== null) {
+          if (paymentDetails.need_action) {
+            return {
+              isPaymentNull: true,
+              action: 'midtrans_success',
+              message: 'Continue to Payment'
+            }
+          } else {
+            return {
+              isPaymentNull: false,
+              action: '',
+              message: 'Payment Pending'
+            }
+          }
+        } else {
+          return {
+            isPaymentNull: true,
+            action: 'midtrans_failed',
+            message: 'Continue to Payment'
+          }
+        }
+      case 1:
+        return {
+          isPaymentNull: false,
+          action: '',
+          message: 'Payment Success'
+        }
+      case -1:
+        return {
+          isPaymentNull: false,
+          action: '',
+          message: 'Payment Cancelled/Exprired'
+        }
+      default:
+        return {
+          isPaymentNull: false,
+          action: '',
+          message: ''
+        }
+    }
+  }
+
+  serializeAddress () {
+    const { invoice } = this.props
+    const address = invoice.pickup.address
+    return `${address.address}, ${address.city}, ${address.province}, ${address.postal_code}`
+  }
+
+  serializePayment () {
+    const { invoice } = this.props
+    if (!invoice.payment_details) return ''
+    switch (invoice.payment_details.payment_type) {
+      case 'bank_transfer':
+      case 'echannel':
+        return (
+          <Col xs='6'>
+            <h5>Payment</h5>
+            <p>Payment Method: {invoice.payment_details.payment_type}</p>
+            <p>Bank: {invoice.payment_details.billing}</p>
+            <p>Account Number: {invoice.payment_details.billing_number}</p>
+          </Col>
+        )
+      case 'cstore':
+        return (
+          <Col xs='6'>
+            <h5>Payment</h5>
+            <p>Payment Method: {invoice.payment_details.payment_type}</p>
+            <p>Store: {invoice.payment_details.billing}</p>
+            <p>Payment Code: {invoice.payment_details.billing_number}</p>
+          </Col>
+        )
+      default:
+        if (invoice.payment_details.payment_type !== '') {
+          return (
+            <Col xs='6'>
+              <h5>Payment</h5>
+              <p>Payment Method: {invoice.payment_details.payment_type}</p>
+            </Col>
+          )
+        } else {
+          return ''
+        }
+    }
+  }
+
+  serializePickupMethod () {
+    const { invoice } = this.props
+    console.log(invoice)
+    if (invoice.pickup === null) return <div/>
+    return (
+      <Col xs='6'>
+        <h5>Pickup Method</h5>
+        <p>Pickup Method: {invoice.pickup.pickup_method.pickup_method_name}</p>
+        <p>Destination Address: {this.serializeAddress()}</p>
+        <p>Service Pickup: {invoice.pickup.pickup_method_service}</p>
+        {
+          invoice.pickup.awb !== ''
+            ? <p>No. Resi JNE: {invoice.pickup.awb}</p>
+            : <>
+              <FormGroup>
+                <Label for='awb'>No. Resi JNE</Label>
+                <Input type='text' id='awb' onChange={this.onInputChange} />
+              </FormGroup>
+              <Button color='success' block={true} onMouseDown={this.onSaveClicked}>Save</Button>
+            </>
+        }
+      </Col>
+    )
   }
 
   renderDataTrips () {
@@ -83,11 +216,32 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { invoice } = this.props
+    if (!invoice.user) return ''
     return (
       <>
         <h1>{invoice.invoice_code}</h1>
         <div className='mb-4' style={{ borderBottom: '2px solid #333' }} />
         <Link route='/dashboard'><Button color='danger' className='mb-4'>Back</Button></Link>
+        <Row className='mb-4'>
+          <Col xs='6'>
+            <h5>User</h5>
+            <p>Name: {invoice.user.name}</p>
+            <p>Email: {invoice.user.email}</p>
+            <p>Phone: {invoice.user.phone}</p>
+          </Col>
+          <Col xs='6'>
+            <h5>Transaction</h5>
+            <p>Invoice Code: {invoice.invoice_code}</p>
+            <p>Status: {this.transactionStatus().message}</p>
+            <p>Date Order: {moment(invoice.createdAt).format('DD MMMM YYYY (HH:SS)')}</p>
+            <p>Total Price: {invoice.total_price}</p>
+          </Col>
+        </Row>
+        <Row className='mb-4'>
+          {this.serializePickupMethod()}
+          {this.serializePayment()}
+        </Row>
+        <div className='mb-4' style={{ borderBottom: '2px solid #333' }} />
         <Row>
           {this.renderDataTrips()}
           {this.renderDataProducts()}
@@ -100,7 +254,7 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
 const mapStateToProps = ({ transaction }: any) => {
   const { invoice } = transaction
 
-  return { invoice }
+  return { invoice, transaction }
 }
 
-export default connect(mapStateToProps, { getInvoice })(DetailsTransaction)
+export default connect(mapStateToProps, { getInvoice, updateShipping, updateDataInvoice })(DetailsTransaction)
