@@ -18,7 +18,7 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class CreateBlog extends Component<PropsComponent, StateComponent> {
-  constructor (props: any) {
+  constructor (props: PropsComponent) {
     super(props)
 
     this.onInputChange = this.onInputChange.bind(this)

@@ -15,7 +15,7 @@ class UserAccountList extends Component<PropsComponent, StateComponent> {
       <>
         <h1>Product List</h1>
         <div className='mb-5' style={{ borderBottom: '2px solid #333' }} />
-        <Table className='text-center table-custom' hover={true} bordered={true}>
+        <Table responsive={true} className='text-center table-custom' hover={true} bordered={true}>
           <thead>
             <tr>
               <th>User ID</th>

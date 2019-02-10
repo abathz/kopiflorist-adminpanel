@@ -20,7 +20,7 @@ const plugins = 'link image code autoresize'
 const toolbar = 'undo redo | bold italic | alignleft aligncenter alignright | link image code'
 
 class TextEditorBlog extends Component<PropsComponent, StateComponent> {
-  constructor (props: any) {
+  constructor (props: PropsComponent) {
     super(props)
 
     this.handleChange = this.handleChange.bind(this)

@@ -30,7 +30,7 @@ interface StateComponent {
 }
 
 class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
-  constructor (props: any) {
+  constructor (props: PropsComponent) {
     super(props)
 
     this.state = {
@@ -212,7 +212,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
                     return <option key={value} value={value}>{value}</option>
                   })}
                 </Input>
-                <Table className='text-center table-custom' id='itinerary' bordered={true}>
+                <Table responsive={true} className='text-center table-custom' id='itinerary' bordered={true}>
                   <thead>
                     <tr>
                       <th>Time</th>

@@ -21,7 +21,7 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class CreateTripPackageType extends Component<PropsComponent, StateComponent> {
-  constructor (props: any) {
+  constructor (props: PropsComponent) {
     super(props)
 
     this.onInputChange = this.onInputChange.bind(this)
@@ -93,7 +93,7 @@ class CreateTripPackageType extends Component<PropsComponent, StateComponent> {
               </FormGroup>
               <Button block={true} color='primary'>Add</Button>
             </Form>
-            <Table className='text-center table-custom' hover={true} bordered={true}>
+            <Table responsive={true} className='text-center table-custom' hover={true} bordered={true}>
               <thead>
                 <tr>
                   <th>Package Name</th>

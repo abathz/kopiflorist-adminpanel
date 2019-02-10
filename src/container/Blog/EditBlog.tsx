@@ -22,7 +22,7 @@ interface StateComponent { }
 
 class EditBlog extends Component<PropsComponent, StateComponent> {
   editor: any
-  constructor (props: any) {
+  constructor (props: PropsComponent) {
     super(props)
 
     this.onInputChange = this.onInputChange.bind(this)

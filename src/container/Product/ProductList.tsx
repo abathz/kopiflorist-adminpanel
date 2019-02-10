@@ -20,7 +20,7 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class ProductList extends Component<PropsComponent, StateComponent> {
-  constructor (props: any) {
+  constructor (props: PropsComponent) {
     super(props)
   }
 
@@ -65,7 +65,7 @@ class ProductList extends Component<PropsComponent, StateComponent> {
           <Link route='createproduct'><Button color='primary'>Add</Button></Link>
         </Col>
         <Col xs='12'>
-          <Table className='text-center table-custom' hover={true} bordered={true}>
+          <Table responsive={true} className='text-center table-custom' hover={true} bordered={true}>
             <thead>
               <tr>
                 <th>Product ID</th>

@@ -59,7 +59,7 @@ class BlogList extends Component<PropsComponent, StateComponent> {
           <Link route='createblog'><Button color='primary'>+ Add</Button></Link>
         </Col>
         <Col xs='12'>
-          <Table className='text-center table-custom' hover={true} bordered={true}>
+          <Table responsive={true} className='text-center table-custom' hover={true} bordered={true}>
             <thead>
               <tr>
                 <th>No</th>

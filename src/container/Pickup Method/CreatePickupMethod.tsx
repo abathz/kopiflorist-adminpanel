@@ -17,7 +17,7 @@ interface PropsComponent extends StateProps, DispatchProps {}
 interface StateComponent {}
 
 class CreatePickupMethod extends Component<PropsComponent, StateComponent> {
-  constructor (props: any) {
+  constructor (props: PropsComponent) {
     super(props)
 
     this.onSubmit = this.onSubmit.bind(this)
