@@ -17,14 +17,8 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class CreateBanner extends Component<PropsComponent, StateComponent> {
-  constructor (props: PropsComponent) {
-    super(props)
 
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === 'photo') {
       this.props.updateDataBanner({ prop: e.target.id, value: e.target.files })
       return
@@ -32,7 +26,7 @@ class CreateBanner extends Component<PropsComponent, StateComponent> {
     this.props.updateDataBanner({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     this.props.createBanner(this.props.banner)
   }

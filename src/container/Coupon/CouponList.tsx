@@ -23,7 +23,7 @@ class CouponList extends Component<PropsComponent, StateComponent> {
     this.props.getAllCoupon()
   }
 
-  onDeleteClick (id: any) {
+  onDeleteClick = (id: any) => () => {
     this.props.deleteCoupon(id)
   }
 
@@ -46,7 +46,7 @@ class CouponList extends Component<PropsComponent, StateComponent> {
           <td className='pt-3'>{endDate}</td>
           <td>
             <Link route='editcoupon' params={{ id: _data.id }}><Button className='mr-1' color='primary' size='sm'>Edit</Button></Link>
-            <Button color='danger' size='sm' onMouseDown={this.onDeleteClick.bind(this, _data.id)}>Delete</Button>
+            <Button color='danger' size='sm' onMouseDown={this.onDeleteClick(_data.id)}>Delete</Button>
           </td>
         </tr>
       )

@@ -14,7 +14,7 @@ const INITIAL_STATE: State = {
   allCategory: []
 }
 
-export default (state = INITIAL_STATE, action: Action) => {
+const CategoryProductReducer = (state = INITIAL_STATE, action: Action) => {
   switch (action.type) {
     case UPDATE_DATA_CATEGORY:
       return { ...state, [action.payload.prop]: action.payload.value }
@@ -24,3 +24,5 @@ export default (state = INITIAL_STATE, action: Action) => {
       return state
   }
 }
+
+export default CategoryProductReducer

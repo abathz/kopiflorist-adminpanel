@@ -19,22 +19,16 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class EditCoupon extends Component<PropsComponent, StateComponent> {
-  constructor (props: PropsComponent) {
-    super(props)
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
 
   componentDidMount () {
     this.props.getCoupon(this.props.id)
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.updateDataCoupon({ prop: e.target.id , value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     this.props.editCoupon(this.props.coupon, this.props.id)
   }

@@ -4,13 +4,8 @@ import { Link } from 'routes'
 import { logout } from 'actions'
 
 class Sidebar extends Component<{ logout: typeof logout }, {}> {
-  constructor (props: any) {
-    super(props)
 
-    this.logout = this.logout.bind(this)
-  }
-
-  logout () {
+  logout = () => {
     this.props.logout()
   }
 

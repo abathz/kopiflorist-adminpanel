@@ -16,7 +16,7 @@ const INITIAL_STATE: State = {
   gender: ''
 }
 
-export default (state = INITIAL_STATE, action: Action) => {
+const AuthReducer = (state = INITIAL_STATE, action: Action) => {
   switch (action.type) {
     case UPDATE_DATA_LOGIN:
       return { ...state, [action.payload.prop]: action.payload.value }
@@ -26,3 +26,5 @@ export default (state = INITIAL_STATE, action: Action) => {
       return state
   }
 }
+
+export default AuthReducer

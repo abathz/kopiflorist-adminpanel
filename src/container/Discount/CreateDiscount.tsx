@@ -36,18 +36,12 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class CreateDiscount extends Component<PropsComponent, StateComponent> {
-  constructor (props: PropsComponent) {
-    super(props)
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
 
   componentWillUnmount () {
     this.props.resetStateDiscount()
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === 'appliedfor') {
       if (e.target.value === '1') {
         this.props.getAllProduct()
@@ -74,7 +68,7 @@ class CreateDiscount extends Component<PropsComponent, StateComponent> {
     this.props.updateDataDiscount({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     this.props.createDiscount(this.props.discount)
   }
@@ -118,7 +112,6 @@ class CreateDiscount extends Component<PropsComponent, StateComponent> {
   }
 
   render () {
-    console.log(this.props.discount)
     return (
       <>
         <Row>

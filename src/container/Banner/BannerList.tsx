@@ -23,7 +23,7 @@ class Banner extends Component<PropsComponent, StateComponent> {
     this.props.getAllBanner()
   }
 
-  onDeleteClick (id: number) {
+  onDeleteClick = (id: number) => () => {
     this.props.deleteBanner(id)
   }
 
@@ -38,7 +38,7 @@ class Banner extends Component<PropsComponent, StateComponent> {
           <td className='pt-3'>{_data.availability ? 'Active' : 'Inactive'}</td>
           <td>
             <Link route='editbanner' params={{ id: _data.id }}><Button className='mr-1' color='primary' size='sm'>Edit</Button></Link>
-            <Button color='danger' size='sm' onMouseDown={this.onDeleteClick.bind(this, _data.id)}>Delete</Button>
+            <Button color='danger' size='sm' onMouseDown={this.onDeleteClick(_data.id)}>Delete</Button>
           </td>
         </tr >
       )

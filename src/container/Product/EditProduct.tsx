@@ -22,20 +22,13 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class EditProduct extends Component<PropsComponent, StateComponent> {
-  constructor (props: PropsComponent) {
-    super(props)
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-    this.onMouseDownButtonAvailability = this.onMouseDownButtonAvailability.bind(this)
-  }
 
   componentDidMount () {
     this.props.getProduct(this.props.id)
     this.props.getCategory()
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === 'main_photo_edited') {
       this.props.updateDataProduct({ prop: e.target.id, value: e.target.files })
       return
@@ -47,12 +40,12 @@ class EditProduct extends Component<PropsComponent, StateComponent> {
     this.props.updateDataProduct({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     this.props.editProduct(this.props.id, this.props.product)
   }
 
-  onMouseDownButtonAvailability () {
+  onMouseDownButtonAvailability = () => {
     this.props.changeAvailabilityProduct(this.props.id)
   }
 
@@ -79,7 +72,6 @@ class EditProduct extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { product } = this.props
-    console.log(product)
     return (
       <>
         <Row>

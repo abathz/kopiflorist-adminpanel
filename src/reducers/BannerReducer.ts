@@ -20,7 +20,7 @@ const INITIAL_STATE: State = {
   availability: false
 }
 
-export default (state = INITIAL_STATE, action: Action) => {
+const BannerReducer = (state = INITIAL_STATE, action: Action) => {
   switch (action.type) {
     case UPDATE_DATA_BANNER:
       return { ...state, [action.payload.prop]: action.payload.value }
@@ -38,3 +38,5 @@ export default (state = INITIAL_STATE, action: Action) => {
       return state
   }
 }
+
+export default BannerReducer

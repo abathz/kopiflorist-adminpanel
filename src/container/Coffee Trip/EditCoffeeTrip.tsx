@@ -45,11 +45,6 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
       price_trip_package: [],
       isPackageChecked: []
     }
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-    this.onAddItineraryClicked = this.onAddItineraryClicked.bind(this)
-    this.onMouseDownButtonAvailability = this.onMouseDownButtonAvailability.bind(this)
   }
 
   componentDidMount () {
@@ -64,7 +59,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     }
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     let isPriceTripPackage = e.target.id.split('-')[0] === 'price_trip_package'
     let indexPriceTripPackage = e.target.id.split('-')[1]
     if (e.target.id === 'main_photo_edited') {
@@ -82,12 +77,12 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.updateDataTrip({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     this.props.editTrip(this.props.id, this.props.trip)
   }
 
-  onAddItineraryClicked () {
+  onAddItineraryClicked = () => {
     const data = {
       day: Number(this.props.trip.day),
       time: this.props.trip.time_itinerary,
@@ -96,21 +91,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.addDataTable(data)
   }
 
-  onTripPackageClicked (selected: any) {
-    const index = this.state.trip_package.indexOf(selected)
-    if (index < 0) {
-      this.state.trip_package.push(selected)
-      this.state.isPackageChecked.push(true)
-    } else {
-      this.state.trip_package.splice(index, 1)
-      this.state.price_trip_package.splice(index, 1)
-      this.state.isPackageChecked.splice(index, 1)
-      this.props.updateDataTrip({ prop: 'price_trip_package', value: [...this.state.price_trip_package] })
-    }
-    this.props.updateDataTrip({ prop: 'trip_package', value: [...this.state.trip_package] })
-  }
-
-  onMouseDownButtonAvailability () {
+  onMouseDownButtonAvailability = () => {
     this.props.changeAvailabilityTrip(this.props.id)
   }
 

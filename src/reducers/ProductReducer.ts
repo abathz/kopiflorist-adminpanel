@@ -43,7 +43,7 @@ const INITIAL_STATE: State = {
   allProduct: []
 }
 
-export default (state = INITIAL_STATE, action: Action) => {
+const ProductReducer = (state = INITIAL_STATE, action: Action) => {
   switch (action.type) {
     case UPDATE_DATA_PRODUCT:
       return { ...state, [action.payload.prop]: action.payload.value }
@@ -68,3 +68,5 @@ export default (state = INITIAL_STATE, action: Action) => {
       return state
   }
 }
+
+export default ProductReducer

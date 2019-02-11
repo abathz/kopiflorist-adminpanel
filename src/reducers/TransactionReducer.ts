@@ -12,7 +12,7 @@ const INITIAL_STATE: State = {
   awb: ''
 }
 
-export default (state = INITIAL_STATE, action: Action) => {
+const TransactionReducer = (state = INITIAL_STATE, action: Action) => {
   switch (action.type) {
     case UPDATE_DATA_INVOICE:
       return { ...state, [action.payload.prop]: action.payload.value }
@@ -24,3 +24,5 @@ export default (state = INITIAL_STATE, action: Action) => {
       return { ...state }
   }
 }
+
+export default TransactionReducer

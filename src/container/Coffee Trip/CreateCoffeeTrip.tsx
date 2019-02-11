@@ -41,10 +41,6 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
       packageChecked: 0,
       isPackageChecked: []
     }
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-    this.onAddItineraryClick = this.onAddItineraryClick.bind(this)
   }
 
   componentDidMount () {
@@ -58,7 +54,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     }
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === 'main_photo') {
       this.props.updateDataTrip({ prop: e.target.id, value: e.target.files })
       return
@@ -87,12 +83,12 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.updateDataTrip({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     this.props.createTrip(this.props.trip)
   }
 
-  onAddItineraryClick () {
+  onAddItineraryClick = () => {
     const data = {
       day: Number(this.props.trip.day),
       time: this.props.trip.time_itinerary,

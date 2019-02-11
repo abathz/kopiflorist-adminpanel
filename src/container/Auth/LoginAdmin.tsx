@@ -19,18 +19,11 @@ interface StateComponent { }
 
 class LoginAdmin extends Component<PropsComponent, StateComponent> {
 
-  constructor (props: PropsComponent) {
-    super(props)
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
-
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.updateDataLogin({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     this.props.signInAdmin(this.props.auth)
   }

@@ -23,19 +23,12 @@ interface StateComponent {
 }
 
 class EditBanner extends Component<PropsComponent, StateComponent> {
-  constructor (props: PropsComponent) {
-    super(props)
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-    this.onMouseDownButtonAvailability = this.onMouseDownButtonAvailability.bind(this)
-  }
 
   componentDidMount () {
     this.props.getBanner(this.props.id)
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === 'photo_edited') {
       this.props.updateDataBanner({ prop: e.target.id, value: e.target.files })
       return
@@ -43,7 +36,7 @@ class EditBanner extends Component<PropsComponent, StateComponent> {
     this.props.updateDataBanner({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     const data = {
       id: this.props.id,
@@ -54,13 +47,12 @@ class EditBanner extends Component<PropsComponent, StateComponent> {
     this.props.editBanner(data)
   }
 
-  onMouseDownButtonAvailability () {
+  onMouseDownButtonAvailability = () => {
     this.props.changeAvailabilityBanner(this.props.id)
   }
 
   render () {
     const { banner } = this.props
-    console.log(banner)
     return (
       <>
         <Row>

@@ -6,7 +6,6 @@ import {
   GET_TRIP
 } from 'actions/types'
 import _ from 'lodash'
-import { stat } from 'fs'
 
 interface State {
   trip_name: string,
@@ -54,7 +53,7 @@ const INITAL_STATE: State = {
   trip_package_edited: []
 }
 
-export default (state = INITAL_STATE, action: Action) => {
+const TripReducer = (state = INITAL_STATE, action: Action) => {
   switch (action.type) {
     case UPDATE_DATA_TRIP:
       if (action.payload.prop === 'trip_package') {
@@ -105,3 +104,5 @@ export default (state = INITAL_STATE, action: Action) => {
       return state
   }
 }
+
+export default TripReducer

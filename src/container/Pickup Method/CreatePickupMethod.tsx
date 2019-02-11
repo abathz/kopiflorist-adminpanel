@@ -17,18 +17,12 @@ interface PropsComponent extends StateProps, DispatchProps {}
 interface StateComponent {}
 
 class CreatePickupMethod extends Component<PropsComponent, StateComponent> {
-  constructor (props: PropsComponent) {
-    super(props)
 
-    this.onSubmit = this.onSubmit.bind(this)
-    this.onInputChange = this.onInputChange.bind(this)
-  }
-
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.updateDataPickupMethod({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     this.props.createPickupMethod(this.props.pickupmethod.pickup_method_name)
   }

@@ -10,7 +10,7 @@ const INITIAL_STATE: State = {
   allPickupMethod: []
 }
 
-export default (state = INITIAL_STATE, action: Action) => {
+const PickupMethodReducer = (state = INITIAL_STATE, action: Action) => {
   switch (action.type) {
     case UPDATE_DATA_PICKUP_METHOD:
       return { ...state, [action.payload.prop]: action.payload.value }
@@ -20,3 +20,5 @@ export default (state = INITIAL_STATE, action: Action) => {
       return state
   }
 }
+
+export default PickupMethodReducer

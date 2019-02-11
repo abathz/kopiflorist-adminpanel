@@ -23,18 +23,12 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class CreateProduct extends Component<PropsComponent, StateComponent> {
-  constructor (props: PropsComponent) {
-    super(props)
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
 
   componentDidMount () {
     this.props.getCategory()
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === 'main_photo') {
       this.props.updateDataProduct({ prop: e.target.id, value: e.target.files })
       return
@@ -46,7 +40,7 @@ class CreateProduct extends Component<PropsComponent, StateComponent> {
     this.props.updateDataProduct({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     this.props.createProduct(this.props.product)
   }

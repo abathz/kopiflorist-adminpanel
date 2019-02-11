@@ -21,13 +21,6 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class EditBlog extends Component<PropsComponent, StateComponent> {
-  editor: any
-  constructor (props: PropsComponent) {
-    super(props)
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
 
   componentDidMount () {
     this.props.getBlog(this.props.id)
@@ -37,7 +30,7 @@ class EditBlog extends Component<PropsComponent, StateComponent> {
     this.props.resetStateBlog()
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.id === 'photo_edited') {
       this.props.updateDataBlog({ prop: e.target.id, value: e.target.files })
       return
@@ -45,7 +38,7 @@ class EditBlog extends Component<PropsComponent, StateComponent> {
     this.props.updateDataBlog({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     const { id, blog } = this.props
     const data = {

@@ -25,28 +25,22 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class CreateCategoryProduct extends Component<PropsComponent, StateComponent> {
-  constructor (props: PropsComponent) {
-    super(props)
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
 
   componentDidMount () {
     this.props.getCategory()
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.updateDataCategory({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     const { category_name } = this.props
     this.props.createCategory(category_name)
   }
 
-  deleteCategory (id: number) {
+  deleteCategory = (id: number) => () => {
     this.props.deleteCategory(id)
   }
 
@@ -58,7 +52,7 @@ class CreateCategoryProduct extends Component<PropsComponent, StateComponent> {
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>
           <td className='pt-3'>{_data.category_name}</td>
-          <td><Button color='danger' size='sm' onMouseDown={this.deleteCategory.bind(this, _data.id)}>Delete</Button></td>
+          <td><Button color='danger' size='sm' onMouseDown={this.deleteCategory(_data.id)}>Delete</Button></td>
         </tr>
       )
     })

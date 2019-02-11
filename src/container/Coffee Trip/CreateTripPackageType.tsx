@@ -21,22 +21,16 @@ interface PropsComponent extends StateProps, DispatchProps { }
 interface StateComponent { }
 
 class CreateTripPackageType extends Component<PropsComponent, StateComponent> {
-  constructor (props: PropsComponent) {
-    super(props)
-
-    this.onInputChange = this.onInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
-  }
 
   componentDidMount () {
     this.props.getAllTripPackage()
   }
 
-  onInputChange (e: ChangeEvent<HTMLInputElement>) {
+  onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     this.props.updateDataPackage({ prop: e.target.id, value: e.target.value })
   }
 
-  onSubmit (e: FormEvent) {
+  onSubmit = (e: FormEvent) => {
     e.preventDefault()
     const { trippackage } = this.props
     let data = {
@@ -48,7 +42,7 @@ class CreateTripPackageType extends Component<PropsComponent, StateComponent> {
     this.props.createTripPackage(data)
   }
 
-  deleteTripPackage (id: number) {
+  deleteTripPackage = (id: number) => () => {
     this.props.deleteTripPackage(id)
   }
 
@@ -61,7 +55,7 @@ class CreateTripPackageType extends Component<PropsComponent, StateComponent> {
           <td className='pt-3'>{data.package_name}</td>
           <td className='pt-3'>{data.min_participant}</td>
           <td className='pt-3'>{data.max_participant}</td>
-          <td><Button color='danger' onMouseDown={this.deleteTripPackage.bind(this, data.id)}>Delete</Button></td>
+          <td><Button color='danger' onMouseDown={this.deleteTripPackage(data.id)}>Delete</Button></td>
         </tr>
       )
     })

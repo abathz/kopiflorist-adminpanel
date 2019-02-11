@@ -24,7 +24,7 @@ const INITIAL_STATE: State = {
   allDiscount: []
 }
 
-export default (state = INITIAL_STATE, action: Action) => {
+const DiscountReducer = (state = INITIAL_STATE, action: Action) => {
   switch (action.type) {
     case UPDATE_DATA_DISCOUNT:
       return { ...state, [action.payload.prop]: action.payload.value }
@@ -52,3 +52,5 @@ export default (state = INITIAL_STATE, action: Action) => {
       return state
   }
 }
+
+export default DiscountReducer

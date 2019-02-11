@@ -20,23 +20,25 @@ const INITIAL_STATE: State = {
   allCoupon: []
 }
 
-export default (state = INITIAL_STATE, action: Action) => {
+const CouponReducer = (state = INITIAL_STATE, action: Action) => {
   switch (action.type) {
-  case UPDATE_DATA_COUPON:
-    return { ...state, [action.payload.prop]: action.payload.value }
-  case GET_ALL_COUPON:
-    return { ...state, allCoupon: action.payload.data }
-  case GET_COUPON:
-    return {
-      ...state,
-      coupon_code: action.payload.data.coupon_code,
-      discount_amount: action.payload.data.discount_amount,
-      date_from: action.payload.data.date_from.substring(0, 10),
-      date_to: action.payload.data.date_to.substring(0, 10),
-      max_discount: action.payload.data.max_discount,
-      min_price_discount: action.payload.data.min_price_discount
-    }
-  default:
-    return state
+    case UPDATE_DATA_COUPON:
+      return { ...state, [action.payload.prop]: action.payload.value }
+    case GET_ALL_COUPON:
+      return { ...state, allCoupon: action.payload.data }
+    case GET_COUPON:
+      return {
+        ...state,
+        coupon_code: action.payload.data.coupon_code,
+        discount_amount: action.payload.data.discount_amount,
+        date_from: action.payload.data.date_from.substring(0, 10),
+        date_to: action.payload.data.date_to.substring(0, 10),
+        max_discount: action.payload.data.max_discount,
+        min_price_discount: action.payload.data.min_price_discount
+      }
+    default:
+      return state
   }
 }
+
+export default CouponReducer

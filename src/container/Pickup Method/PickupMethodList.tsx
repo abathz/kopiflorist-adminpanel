@@ -24,7 +24,6 @@ class PickupMethodList extends Component<PropsComponent, StateComponent> {
 
   renderDataTable () {
     const { allPickupMethod } = this.props
-    console.log(allPickupMethod)
     if (!allPickupMethod) return <td/>
     return _.map(allPickupMethod, (data: any, index: number) => {
       return (
