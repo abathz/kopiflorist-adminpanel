@@ -1,8 +1,8 @@
 import React, { Component, ChangeEvent } from 'react'
 import { connect } from 'react-redux'
-import { getInvoice, updateShipping, updateDataInvoice } from 'actions'
+import { getInvoice, updateShipping, updateDataInvoice, trackDelivery } from 'actions'
 import _ from 'lodash'
-import { Col, Row, Button, FormGroup, Label, Input } from 'reactstrap'
+import { Col, Row, Button, FormGroup, Label, Input, Table } from 'reactstrap'
 import { Link } from 'routes'
 import moment from 'moment'
 
@@ -10,12 +10,14 @@ interface StateProps {
   id: number
   invoice: any
   transaction: any
+  trackingDelivery: any
 }
 
 interface DispatchProps {
   getInvoice: typeof getInvoice
   updateShipping: typeof updateShipping
   updateDataInvoice: typeof updateDataInvoice
+  trackDelivery: typeof trackDelivery
 }
 
 interface PropsComponent extends StateProps, DispatchProps {}
@@ -25,6 +27,7 @@ interface StateComponent {}
 class DetailsTransaction extends Component<PropsComponent, StateComponent> {
   componentDidMount () {
     this.props.getInvoice(this.props.id)
+    this.props.trackDelivery(this.props.id)
   }
 
   onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -91,6 +94,7 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
 
   serializeAddress () {
     const { invoice } = this.props
+    if (!invoice.pickup.address) return ''
     const address = invoice.pickup.address
     return `${address.address}, ${address.city}, ${address.province}, ${address.postal_code}`
   }
@@ -140,18 +144,23 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
       <Col xs='6'>
         <h5>Pickup Method</h5>
         <p>Pickup Method: {invoice.pickup.pickup_method.pickup_method_name}</p>
-        <p>Destination Address: {this.serializeAddress()}</p>
-        <p>Service Pickup: {invoice.pickup.pickup_method_service}</p>
-        {
-          invoice.pickup.awb !== ''
-            ? <p>No. Resi JNE: {invoice.pickup.awb}</p>
-            : <>
-              <FormGroup>
-                <Label for='awb'>No. Resi JNE</Label>
-                <Input type='text' id='awb' onChange={this.onInputChange} />
-              </FormGroup>
-              <Button color='success' block={true} onMouseDown={this.onSaveClicked}>Save</Button>
-            </>
+        {invoice.pickup.pickup_method.code === 'jne' ?
+          <>
+            <p>Destination Address: {this.serializeAddress()}</p>
+            <p>Service Pickup: {invoice.pickup.pickup_method_service}</p>
+            {
+              invoice.pickup.awb !== ''
+                ? <p>No. Resi JNE: {invoice.pickup.awb}</p>
+                : <>
+                  <FormGroup>
+                    <Label for='awb'>No. Resi JNE</Label>
+                    <Input type='text' id='awb' onChange={this.onInputChange} />
+                  </FormGroup>
+                  <Button color='success' block={true} onMouseDown={this.onSaveClicked}>Save</Button>
+                </>
+            }
+          </>
+        : <div/>
         }
       </Col>
     )
@@ -214,8 +223,79 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
     })
   }
 
+  trackHistory () {
+    const { trackingDelivery } = this.props
+    return _.map(trackingDelivery.manifest, (data: any, index: number) => {
+      let serializeDate = `${moment(data.manifest_date).format('DD-MM-YYYY')} ${data.manifest_time}`
+      return (
+        <tr key={index}>
+          <td>{serializeDate}</td>
+          <td>{data.manifest_description} [{data.city_name}]</td>
+        </tr>
+      )
+    })
+  }
+
+  renderDataTrackingDelivery () {
+    const { trackingDelivery } = this.props
+    if (!trackingDelivery.summary) return ''
+    return (
+      <>
+        <Table responsive={true} bordered={true}>
+          <thead>
+            <tr>
+              <th>No. AWB</th>
+              <th>Service</th>
+              <th>Date of Shipment</th>
+              <th>Origin</th>
+              <th>Destination</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{trackingDelivery.summary.waybill_number}</td>
+              <td>{trackingDelivery.summary.service_code}</td>
+              <td>{moment(trackingDelivery.summary.waybill_date).format('DD MMMM YYYY')}</td>
+              <td>{trackingDelivery.summary.origin}</td>
+              <td>{trackingDelivery.summary.destination}</td>
+            </tr>
+          </tbody>
+        </Table>
+        <Table responsive={true} bordered={true}>
+          <thead>
+            <tr>
+              <th>Shipper</th>
+              <th>Consignee</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{trackingDelivery.details.shippper_name}</td>
+              <td>{trackingDelivery.details.receiver_name}</td>
+            </tr>
+            <tr>
+              <td>{trackingDelivery.details.shipper_address1}</td>
+              <td>{trackingDelivery.details.receiver_address1}</td>
+            </tr>
+          </tbody>
+        </Table>
+        <Table responsive={true} bordered={true}>
+          <thead>
+            <tr>
+              <th colSpan={2}>History</th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.trackHistory()}
+          </tbody>
+        </Table>
+      </>
+    )
+  }
+
   render () {
     const { invoice } = this.props
+    console.log(invoice)
     if (!invoice.user) return ''
     return (
       <>
@@ -241,6 +321,14 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
           {this.serializePickupMethod()}
           {this.serializePayment()}
         </Row>
+        {
+          invoice.pickup.pickup_method.code === 'jne'
+            ? <>
+              <h4>Tracking Delivery</h4>
+              {this.renderDataTrackingDelivery()}
+            </>
+            : <div />
+        }
         <div className='mb-4' style={{ borderBottom: '2px solid #333' }} />
         <Row>
           {this.renderDataTrips()}
@@ -252,9 +340,14 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
 }
 
 const mapStateToProps = ({ transaction }: any) => {
-  const { invoice } = transaction
+  const { invoice, trackingDelivery } = transaction
 
-  return { invoice, transaction }
+  return { invoice, trackingDelivery, transaction }
 }
 
-export default connect(mapStateToProps, { getInvoice, updateShipping, updateDataInvoice })(DetailsTransaction)
+export default connect(mapStateToProps, {
+  getInvoice,
+  updateShipping,
+  updateDataInvoice,
+  trackDelivery
+})(DetailsTransaction)

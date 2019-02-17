@@ -1,7 +1,7 @@
 import axios from 'axios'
 import querystring from 'querystring'
 import { Dispatch } from 'redux'
-import { GET_ALL_INVOICES, GET_INVOICE, UPDATE_DATA_INVOICE } from './types'
+import { GET_ALL_INVOICES, GET_INVOICE, UPDATE_DATA_INVOICE, TRACK_DELIVERY_SUCCESS, TRACK_DELIVERY_FAILED } from './types'
 
 export const updateDataInvoice = ({ prop, value }: any) => (dispatch: Dispatch<any>) => {
   dispatch({
@@ -30,6 +30,16 @@ export const updateShipping = (data: any) => async () => {
   await updateShippingSuccess()
 }
 
+export const trackDelivery = (idInvoice: number) => async (dispatch: Dispatch<any>) => {
+  try {
+    const res = await axios.get(`/invoice/${idInvoice}/track`)
+
+    await trackDeliverySuccess(dispatch, res)
+  } catch (error) {
+    await trackDeliveryFailed(dispatch)
+  }
+}
+
 const getAllInvoicesSuccess = (dispatch: Dispatch<any>, res: any) => {
   dispatch({
     type: GET_ALL_INVOICES,
@@ -46,4 +56,15 @@ const getInvoiceSuccess = (dispatch: Dispatch<any>, res: any) => {
 
 const updateShippingSuccess = () => {
   window.location.reload()
+}
+
+const trackDeliverySuccess = (dispatch: Dispatch<any>, res: any) => {
+  dispatch({
+    type: TRACK_DELIVERY_SUCCESS,
+    payload: res.data
+  })
+}
+
+const trackDeliveryFailed = (dispatch: Dispatch<any>) => {
+  dispatch({ type: TRACK_DELIVERY_FAILED })
 }
