@@ -33,15 +33,16 @@ class CouponList extends Component<PropsComponent, StateComponent> {
     return allCoupon.map((_data: any) => {
       const dateFrom = _data.date_from.substring(0, 10)
       const dateTo = _data.date_to.substring(0, 10)
-      const startDate = moment(dateFrom).format('DD M YYYY')
-      const endDate = moment(dateTo).format('DD M YYYY')
+      const startDate = moment(dateFrom).format('DD-MM-YYYY')
+      const endDate = moment(dateTo).format('DD-MM-YYYY')
       return (
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>
           <td className='pt-3'>{_data.coupon_code}</td>
           <td className='pt-3'>{_data.discount_amount}%</td>
           <td className='pt-3'>{_data.max_discount}</td>
-          <td className='pt-3'>{''}</td>
+          <td className='pt-3'>{_data.min_price_discount}</td>
+          <td className='pt-3'>{_data.quantity}</td>
           <td className='pt-3'>{startDate}</td>
           <td className='pt-3'>{endDate}</td>
           <td>
@@ -71,6 +72,7 @@ class CouponList extends Component<PropsComponent, StateComponent> {
                 <th>Coupon Code</th>
                 <th>Amount</th>
                 <th>Max Discount</th>
+                <th>Min Price Discount</th>
                 <th>Limit Usage</th>
                 <th>Start</th>
                 <th>End</th>

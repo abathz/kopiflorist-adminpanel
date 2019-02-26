@@ -28,6 +28,7 @@ class CreateCoupon extends Component<PropsComponent, StateComponent> {
   }
 
   render () {
+    console.log(this.props.coupon)
     return (
       <>
         <Row>
@@ -45,7 +46,7 @@ class CreateCoupon extends Component<PropsComponent, StateComponent> {
               </FormGroup>
               <FormGroup>
                 <Label className='label' for='discount_amount'>Amount (%)</Label>
-                <Input type='textarea' id='discount_amount' onChange={this.onInputChange} />
+                <Input type='number' id='discount_amount' onChange={this.onInputChange} />
               </FormGroup>
               <FormGroup>
                 <Label className='label' for='date_from'>Start</Label>
@@ -57,11 +58,15 @@ class CreateCoupon extends Component<PropsComponent, StateComponent> {
               </FormGroup>
               <FormGroup>
                 <Label className='label' for='max_discount'>Maximum Discount</Label>
-                <Input type='textarea' id='max_discount' onChange={this.onInputChange} />
+                <Input type='number' id='max_discount' onChange={this.onInputChange} />
               </FormGroup>
               <FormGroup>
                 <Label className='label' for='min_price_discount'>Minimum Price Discount</Label>
-                <Input type='text' id='min_price_discount' onChange={this.onInputChange} />
+                <Input type='number' id='min_price_discount' onChange={this.onInputChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label className='label' for='quantity'>Quantity</Label>
+                <Input type='number' id='quantity' onChange={this.onInputChange} />
               </FormGroup>
               <Button block={true} color='primary'>Save</Button>
             </Form>

@@ -7,6 +7,7 @@ interface State {
   date_to: string
   max_discount: number
   min_price_discount: number
+  quantity: number
   allCoupon: []
 }
 
@@ -17,6 +18,7 @@ const INITIAL_STATE: State = {
   date_to: '',
   max_discount: 0,
   min_price_discount: 0,
+  quantity: 0,
   allCoupon: []
 }
 
@@ -34,7 +36,8 @@ const CouponReducer = (state = INITIAL_STATE, action: Action) => {
         date_from: action.payload.data.date_from.substring(0, 10),
         date_to: action.payload.data.date_to.substring(0, 10),
         max_discount: action.payload.data.max_discount,
-        min_price_discount: action.payload.data.min_price_discount
+        min_price_discount: action.payload.data.min_price_discount,
+        quantity: action.payload.data.quantity
       }
     default:
       return state

@@ -17,7 +17,8 @@ export const createCoupon = (newData: any) => async (dispatch: Dispatch<any>) =>
     max_discount: newData.max_discount,
     min_price_discount: newData.min_price_discount,
     date_from: newData.date_from,
-    date_to: newData.date_to
+    date_to: newData.date_to,
+    quantity: newData.quantity
   }
   await axios.post('/create_coupon', querystring.stringify(data))
   await createCouponSuccess()
@@ -42,7 +43,8 @@ export const editCoupon = (...data: any[]) => async (dispatch: Dispatch<any>) =>
     max_discount: data[0].max_discount,
     min_price_discount: data[0].min_price_discount,
     date_from: data[0].date_from,
-    date_to: data[0].date_to
+    date_to: data[0].date_to,
+    quantity: data[0].quantity
   }
 
   await axios.post('/edit_coupon', querystring.stringify(coupon))
