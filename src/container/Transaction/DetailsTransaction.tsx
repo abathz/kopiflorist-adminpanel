@@ -138,7 +138,6 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
 
   serializePickupMethod () {
     const { invoice } = this.props
-    console.log(invoice)
     if (invoice.pickup === null) return <div/>
     return (
       <Col xs='6'>
@@ -295,7 +294,6 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { invoice } = this.props
-    console.log(invoice)
     if (!invoice.user) return ''
     return (
       <>

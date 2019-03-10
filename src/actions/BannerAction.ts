@@ -34,7 +34,6 @@ export const getAllBanner = () => async (dispatch: Dispatch<any>) => {
 
 export const getBanner = (id: number) => async (dispatch: Dispatch<any>) => {
   const res = await axios.get(`/banner/${id}`)
-  console.log(res)
   await getBannerSuccess(dispatch, res)
 }
 

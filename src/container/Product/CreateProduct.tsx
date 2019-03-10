@@ -56,7 +56,6 @@ class CreateProduct extends Component<PropsComponent, StateComponent> {
 
   render () {
     if (!this.props.allCategory) return ''
-    console.log(this.props.product)
     return (
       <>
         <Row>
@@ -105,6 +104,10 @@ class CreateProduct extends Component<PropsComponent, StateComponent> {
               <FormGroup>
                 <Label className='label' for='quantity'>Quantity</Label>
                 <Input type='number' id='quantity' onChange={this.onInputChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label className='label' for='discount'>Discount</Label>
+                <Input type='number' id='discount' onChange={this.onInputChange} />
               </FormGroup>
               <FormGroup>
                 <Label className='label' for='category'>Category</Label>

@@ -42,7 +42,8 @@ class EditProduct extends Component<PropsComponent, StateComponent> {
 
   onSubmit = (e: FormEvent) => {
     e.preventDefault()
-    this.props.editProduct(this.props.id, this.props.product)
+    const { id, product } = this.props
+    this.props.editProduct(id, product)
   }
 
   onMouseDownButtonAvailability = () => {
@@ -120,6 +121,10 @@ class EditProduct extends Component<PropsComponent, StateComponent> {
               <FormGroup>
                 <Label className='label' for='quantity'>Quantity</Label>
                 <Input type='number' id='quantity' value={product.quantity} onChange={this.onInputChange} />
+              </FormGroup>
+              <FormGroup>
+                <Label className='label' for='discount'>Discount</Label>
+                <Input type='number' id='discount' value={product.discount} onChange={this.onInputChange} />
               </FormGroup>
               <FormGroup>
                 <Label className='label' for='category'>Category</Label>

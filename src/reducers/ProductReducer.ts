@@ -13,6 +13,7 @@ interface State {
   weight_in: string
   price: string
   quantity: number
+  discount: number
   category: number
   quantity_edited: number
   category_edited: number
@@ -32,6 +33,7 @@ const INITIAL_STATE: State = {
   weight_in: '',
   price: '',
   quantity: 0,
+  discount: 0,
   category: 0,
   quantity_edited: 0,
   category_edited: 0,
@@ -59,6 +61,7 @@ const ProductReducer = (state = INITIAL_STATE, action: Action) => {
         weight_in: action.payload.data.weight_in,
         price: action.payload.data.price,
         quantity: action.payload.data.quantity,
+        discount: action.payload.data.discount.amount,
         category: action.payload.data.category,
         availability: action.payload.data.availability,
         main_photo: action.payload.data.photo,

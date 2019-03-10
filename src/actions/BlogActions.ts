@@ -39,7 +39,6 @@ export const editBlog = (data: any) => async (dispatch: Dispatch<any>) => {
   formData.append('id', data.id)
   formData.append('title', data.blog_title)
   formData.append('content', data.content)
-  console.log(data.content)
   for (const photo of data.photo_edited) {
     formData.append('photo', photo)
   }

@@ -118,7 +118,6 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     if (!trip) return <div />
     return _.map(trip.trip_package, (data: any, index: number) => {
       if (!this.state.trip_package[index]) return ''
-      console.log()
       return (
         <div key={index}>
           <FormGroup check={true}>
@@ -152,7 +151,6 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { trip } = this.props
-    console.log(trip)
     if (!trip) return ''
     return (
       <>

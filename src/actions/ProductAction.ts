@@ -20,6 +20,7 @@ export const createProduct = (data: any) => async () => {
   formData.append('weight_in', data.weight_in)
   formData.append('category', data.category)
   formData.append('quantity', data.quantity)
+  formData.append('discount', data.discount)
   for (const photo of data.main_photo) {
     formData.append('main_photo', photo)
   }
@@ -55,12 +56,14 @@ export const editProduct = (...data: any[]) => async () => {
   formData.append('weight_in', data[1].weight_in)
   formData.append('category', data[1].category)
   formData.append('quantity', data[1].quantity)
+  formData.append('discount', data[1].discount)
   for (const photo of data[1].main_photo_edited) {
     formData.append('main_photo', photo)
   }
   for (const photo of data[1].other_photo_edited) {
     formData.append('other_photo', photo)
   }
+
   await axios.post('/edit_product', formData, {
     headers: {
       'Content-Type': 'multipart/form-data'

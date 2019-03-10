@@ -35,7 +35,6 @@ class EditCoupon extends Component<PropsComponent, StateComponent> {
 
   render () {
     const { coupon } = this.props
-    console.log(coupon)
     return (
       <>
         <Row>

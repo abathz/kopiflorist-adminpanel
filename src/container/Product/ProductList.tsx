@@ -38,7 +38,16 @@ class ProductList extends Component<PropsComponent, StateComponent> {
           <td className='pt-3'>{_data.id}</td>
           <td className='pt-3'>{_data.name}</td>
           <td className='pt-3'>{_data.category}</td>
-          <td className='pt-3'>{_data.price}</td>
+          <td className='pt-3'>
+            <p className='mb-1' style={{ textDecoration: _data.discount ? 'line-through' : 'none' }}>{_data.price}</p>
+            {
+              _data.discount &&
+              <>
+                <p className='mb-1 text-hel-reg text-s' style={{ color: 'red' }}>({_data.discount.amount}%)</p>
+                <span className='text-hel-95' style={{ color: 'red' }}>{_data.discount.price_discount}</span>
+              </>
+            }
+          </td>
           <td className='pt-3'>{_data.quantity}</td>
           <td className='pt-3'>{_data.availability ? 'Active' : 'Inactive'}</td>
           <td>

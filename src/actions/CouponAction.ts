@@ -31,7 +31,6 @@ export const getAllCoupon = () => async (dispatch: Dispatch<any>) => {
 
 export const getCoupon = (id: any) => async (dispatch: Dispatch<any>) => {
   const res = await axios.get(`/coupon/${id}`)
-  await console.log(res)
   await getCouponSuccess(dispatch, res)
 }
 

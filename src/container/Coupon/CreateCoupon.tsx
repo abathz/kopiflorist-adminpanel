@@ -28,7 +28,6 @@ class CreateCoupon extends Component<PropsComponent, StateComponent> {
   }
 
   render () {
-    console.log(this.props.coupon)
     return (
       <>
         <Row>
