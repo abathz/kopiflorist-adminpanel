@@ -71,7 +71,12 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
       return
     }
     if (isPriceTripPackage) {
-      this.props.updateDataTrip({ prop: 'trip_package', value: { index: indexPriceTripPackage, price: e.target.value } })
+      this.props.updateDataTrip({
+        prop: 'trip_package',
+        value: {
+          index: indexPriceTripPackage, price: e.target.value
+        }
+      })
       return
     }
     this.props.updateDataTrip({ prop: e.target.id, value: e.target.value })
@@ -241,6 +246,10 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
                 <div className='clearfix' />
               </FormGroup>
               {this.renderTripPackageList()}
+              <FormGroup>
+                <Label className='label' for='discount'>Discount</Label>
+                <Input type='text' id='discount' onChange={this.onInputChange} />
+              </FormGroup>
               <FormGroup className='mt-2'>
                 <Label className='label' for='main_photo_edited'>Main Photo</Label>
                 <Input type='file' id='main_photo_edited' onChange={this.onInputChange} />

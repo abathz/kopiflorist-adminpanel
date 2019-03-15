@@ -35,13 +35,18 @@ class CoffeTripList extends Component<PropsComponent, StateComponent> {
       const tripDate = _data.trip_date.substring(0, 10)
       let startDate = moment(tripDate).format('DD MMMM YYYY')
       let endDate = moment(tripDate).add(_data.duration - 1, 'd').format('DD MMMM YYYY')
+      let priceTrip = _data.trip_package
       return (
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>
           <td className='pt-3'>{_data.title}</td>
           <td className='pt-3'>{`${startDate} -- ${endDate}`}</td>
           <td className='pt-3'>{_data.address}</td>
-          <td className='pt-3'>{_data.price}</td>
+          <td className='pt-3'>
+            {priceTrip.map((data: any) => {
+              return <div key={data.id}><span>{`${data.package_name} (Rp ${data.price})`}</span></div>
+            })}
+          </td>
           <td className='pt-3'>{_data.availability ? 'Active' : 'Inactive'}</td>
           <td>
             <Link route='editcoffeetrip' params={{ id: _data.id }}><Button className='mr-1' color='primary' size='sm'>Edit</Button></Link>
@@ -71,7 +76,7 @@ class CoffeTripList extends Component<PropsComponent, StateComponent> {
                 <th>Trip Name</th>
                 <th>Time</th>
                 <th>Location</th>
-                <th>Price/Package</th>
+                <th>Package</th>
                 <th>Status</th>
                 <th>Action</th>
               </tr>
