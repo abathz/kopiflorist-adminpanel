@@ -247,8 +247,8 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
               </FormGroup>
               {this.renderTripPackageList()}
               <FormGroup>
-                <Label className='label' for='discount'>Discount</Label>
-                <Input type='text' id='discount' onChange={this.onInputChange} />
+                <Label className='label' for='discount'>Discount (%)</Label>
+                <Input type='text' id='discount' value={trip.discount} onChange={this.onInputChange} />
               </FormGroup>
               <FormGroup className='mt-2'>
                 <Label className='label' for='main_photo_edited'>Main Photo</Label>

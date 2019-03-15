@@ -243,6 +243,10 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
               </FormGroup>
               <Label className='label'>Trip Package</Label>
               {this.renderTripPackageList()}
+              <FormGroup>
+                <Label className='label' for='discount'>Discount (%)</Label>
+                <Input type='text' id='discount' onChange={this.onInputChange} />
+              </FormGroup>
               <FormGroup className='mt-2'>
                 <Label className='label' for='main_photo'>Main Photo</Label>
                 <Input type='file' id='main_photo' onChange={this.onInputChange} />
