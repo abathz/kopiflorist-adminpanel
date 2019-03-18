@@ -320,12 +320,11 @@ class DetailsTransaction extends Component<PropsComponent, StateComponent> {
           {this.serializePayment()}
         </Row>
         {
-          invoice.pickup.pickup_method.code === 'jne'
-            ? <>
+          invoice.pickup && invoice.pickup.pickup_method.code === 'jne' &&
+            <>
               <h4>Tracking Delivery</h4>
               {this.renderDataTrackingDelivery()}
             </>
-            : <div />
         }
         <div className='mb-4' style={{ borderBottom: '2px solid #333' }} />
         <Row>

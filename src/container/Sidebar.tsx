@@ -19,7 +19,7 @@ class Sidebar extends Component<{ logout: typeof logout }, {}> {
           <Link prefetch={true} route='coffeetriplist'><li>Coffee Trip</li></Link>
           <Link prefetch={true} route='productlist'><li>Product</li></Link>
           <Link prefetch={true} route='useraccountlist'><li>User Account</li></Link>
-          <Link prefetch={true} route='discountlist'><li>Discount</li></Link>
+          {/* <Link prefetch={true} route='discountlist'><li>Discount</li></Link> */}
           <Link prefetch={true} route='couponlist'><li>Coupon</li></Link>
           <Link prefetch={true} route='bloglist'><li>Blog</li></Link>
           <Link prefetch={true} route='banner'><li>Home Banner</li></Link>
