@@ -10,6 +10,7 @@ import AuthReducer from './AuthReducer'
 import PickupMethodReducer from './PickupMethodReducer'
 import TripPackageTypeReducer from './TripPackageTypeReducer'
 import TransactionReducer from './TransactionReducer'
+import UserReducer from './UserReducer'
 
 const rootReducer = combineReducers({
   product: ProductReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   auth: AuthReducer,
   pickupmethod: PickupMethodReducer,
   trippackage: TripPackageTypeReducer,
-  transaction: TransactionReducer
+  transaction: TransactionReducer,
+  user: UserReducer
 })
 
 export default rootReducer
