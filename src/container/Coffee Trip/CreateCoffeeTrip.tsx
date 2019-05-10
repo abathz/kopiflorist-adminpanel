@@ -1,6 +1,6 @@
-import { faPen } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { addDataTable, createTrip, updateDataTrip, getAllTripPackage } from 'actions'
+import { addDataTable, deleteDataTable, createTrip, updateDataTrip, getAllTripPackage } from 'actions'
 import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { connect } from 'react-redux'
 import { Button, Col, Form, FormGroup, Input, Label, Row, Table } from 'reactstrap'
@@ -15,6 +15,7 @@ interface DispatchProps {
   updateDataTrip: typeof updateDataTrip
   createTrip: typeof createTrip
   addDataTable: typeof addDataTable
+  deleteDataTable: typeof deleteDataTable
   getAllTripPackage: typeof getAllTripPackage
 }
 
@@ -97,6 +98,14 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.addDataTable(data)
   }
 
+  onDeleteItineraryClick = (day: number, index: number) => () => {
+    const data = {
+      day: day,
+      index: index
+    }
+    this.props.deleteDataTable(data)
+  }
+
   onTripPackageClicked = (selected: any) => (e: any) => {
     const index = this.state.trip_package.indexOf(selected)
     if (index < 0) {
@@ -144,7 +153,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
             <tr key={index}>
               <td>{data.time}</td>
               <td>{data.activity}</td>
-              <td><FontAwesomeIcon icon={faPen} /></td>
+              <td><span style={{ cursor: 'pointer' }} onClick={this.onDeleteItineraryClick(data.day, index)}><FontAwesomeIcon icon={faTrash} /></span></td>
             </tr>
           )
         }
@@ -273,5 +282,6 @@ export default connect(mapStateToProps, {
   updateDataTrip,
   createTrip,
   addDataTable,
+  deleteDataTable,
   getAllTripPackage
 })(CreateCoffeeTrip)

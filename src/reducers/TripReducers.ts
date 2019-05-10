@@ -3,6 +3,7 @@ import {
   UPDATE_DATA_TRIP,
   GET_ALL_TRIP,
   ADD_DATA_TABLE,
+  DELETE_DATA_TABLE,
   GET_TRIP
 } from 'actions/types'
 import _ from 'lodash'
@@ -67,6 +68,9 @@ const TripReducer = (state = INITAL_STATE, action: Action) => {
       return { ...state, [action.payload.prop]: action.payload.value }
     case ADD_DATA_TABLE:
       state.dataTable[Number(action.payload.day) - 1].push(action.payload)
+      return { ...state }
+    case DELETE_DATA_TABLE:
+      state.dataTable[Number(action.payload.day) - 1].splice(action.payload.index, 1)
       return { ...state }
     case GET_ALL_TRIP:
       return { ...state, allTrip: action.payload.data }

@@ -1,7 +1,7 @@
 import axios from 'axios'
 import querystring from 'querystring'
 import { Dispatch } from 'redux'
-import { UPDATE_DATA_TRIP, GET_ALL_TRIP, ADD_DATA_TABLE, GET_TRIP } from 'actions/types'
+import { UPDATE_DATA_TRIP, GET_ALL_TRIP, ADD_DATA_TABLE, DELETE_DATA_TABLE, GET_TRIP } from 'actions/types'
 import _ from 'lodash'
 
 export const updateDataTrip = ({ prop, value }: any) => (dispatch: Dispatch<any>) => {
@@ -14,6 +14,13 @@ export const updateDataTrip = ({ prop, value }: any) => (dispatch: Dispatch<any>
 export const addDataTable = (data: any) => (dispatch: Dispatch<any>) => {
   dispatch({
     type: ADD_DATA_TABLE,
+    payload: data
+  })
+}
+
+export const deleteDataTable = (data: any) => (dispatch: Dispatch<any>) => {
+  dispatch({
+    type: DELETE_DATA_TABLE,
     payload: data
   })
 }
