@@ -59,7 +59,7 @@ const TripReducer = (state = INITAL_STATE, action: Action) => {
     case UPDATE_DATA_TRIP:
       if (action.payload.prop === 'trip_package') {
         if (action.payload.value.isCreated) {
-          state.trip_package.push(action.payload.value.data)
+          state.trip_package = action.payload.value.data
           return { ...state }
         }
         state.trip_package[Number(action.payload.value.index)].price = Number(action.payload.value.price)
