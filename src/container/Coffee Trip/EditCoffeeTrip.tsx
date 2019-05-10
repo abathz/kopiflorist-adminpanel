@@ -2,10 +2,11 @@ import React, { ChangeEvent, Component, FormEvent } from 'react'
 import { connect } from 'react-redux'
 import { Button, Col, Form, FormGroup, Input, Label, Row, Table } from 'reactstrap'
 import _ from 'lodash'
-import { faPen } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   addDataTable,
+  deleteDataTable,
   updateDataTrip,
   getTrip,
   editTrip,
@@ -26,6 +27,7 @@ interface DispatchProps {
   editTrip: typeof editTrip
   changeAvailabilityTrip: typeof changeAvailabilityTrip
   getAllTripPackage: typeof getAllTripPackage
+  deleteDataTable: typeof deleteDataTable
 }
 
 interface PropsComponent extends StateProps, DispatchProps { }
@@ -100,6 +102,14 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
     this.props.changeAvailabilityTrip(this.props.id)
   }
 
+  onDeleteItineraryClick = (day: number, index: number) => () => {
+    const data = {
+      day: day,
+      index: index
+    }
+    this.props.deleteDataTable(data)
+  }
+
   renderDataTable () {
     const { dataTable } = this.props.trip
     return _.map(dataTable, (data: any, index: number) => {
@@ -110,7 +120,7 @@ class EditCoffeeTrip extends Component<PropsComponent, StateComponent> {
             <tr key={index}>
               <td>{data.time}</td>
               <td>{data.activity}</td>
-              <td><FontAwesomeIcon icon={faPen} /></td>
+              <td><span style={{ cursor: 'pointer' }} onClick={this.onDeleteItineraryClick(data.day, index)}><FontAwesomeIcon icon={faTrash} /></span></td>
             </tr>
           )
         }
@@ -284,6 +294,7 @@ const mapStateToProps = ({ trip, trippackage }: any) => {
 export default connect(mapStateToProps, {
   updateDataTrip,
   addDataTable,
+  deleteDataTable,
   getTrip,
   editTrip,
   changeAvailabilityTrip,
