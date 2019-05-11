@@ -36,7 +36,7 @@ class CoffeTripList extends Component<PropsComponent, StateComponent> {
       let startDate = moment(tripDate).format('DD MMMM YYYY')
       let endDate = moment(tripDate).add(_data.duration - 1, 'd').format('DD MMMM YYYY')
       let priceTrip = _data.trip_package
-      console.log(_data.discount)
+
       return (
         <tr key={_data.id}>
           <td className='pt-3'>{_data.id}</td>

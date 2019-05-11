@@ -115,7 +115,7 @@ class CreateCoffeeTrip extends Component<PropsComponent, StateComponent> {
       this.state.trip_package.splice(index, 1)
       this.state.price_trip_package.splice(index, 1)
       this.state.isPackageChecked[selected - 1] = false
-      this.props.updateDataTrip({ prop: 'price_trip_package', value: { isCreated: true, data: [...this.state.price_trip_package] } })
+      this.props.updateDataTrip({ prop: 'price_trip_package', value: [...this.state.price_trip_package] })
     }
     this.props.updateDataTrip({ prop: 'trip_package', value: { isCreated: true, data: [...this.state.trip_package] } })
   }

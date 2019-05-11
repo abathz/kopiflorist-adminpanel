@@ -19,7 +19,6 @@ interface StateComponent {}
 class CreatePickupMethod extends Component<PropsComponent, StateComponent> {
 
   onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target)
     if (e.target.type === 'checkbox') {
       this.props.updateDataPickupMethod({ prop: e.target.id, value: e.target.checked })
       return
