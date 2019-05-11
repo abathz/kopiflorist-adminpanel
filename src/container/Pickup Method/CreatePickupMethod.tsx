@@ -19,12 +19,17 @@ interface StateComponent {}
 class CreatePickupMethod extends Component<PropsComponent, StateComponent> {
 
   onInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target)
+    if (e.target.type === 'checkbox') {
+      this.props.updateDataPickupMethod({ prop: e.target.id, value: e.target.checked })
+      return
+    }
     this.props.updateDataPickupMethod({ prop: e.target.id, value: e.target.value })
   }
 
   onSubmit = (e: FormEvent) => {
     e.preventDefault()
-    this.props.createPickupMethod(this.props.pickupmethod.pickup_method_name)
+    this.props.createPickupMethod(this.props.pickupmethod)
   }
 
   render () {
@@ -43,6 +48,19 @@ class CreatePickupMethod extends Component<PropsComponent, StateComponent> {
                 <Label className='label' for='pickup_method_name'>Pickup Method Name</Label>
                 <Input type='text' id='pickup_method_name' onChange={this.onInputChange} />
               </FormGroup>
+              <FormGroup check>
+                <Label check={true}>
+                  <Input type="checkbox" id='is_rajaongkir_supported' onChange={this.onInputChange} checked={this.props.pickupmethod.is_rajaongkir_supported} />{' '}
+                  Listed In Rajaongkir? (Fee from Rajaongkir)
+                </Label>
+              </FormGroup>
+              <FormGroup check>
+                <Label check={true}>
+                  <Input type="checkbox" id='self_pickup' onChange={this.onInputChange} checked={this.props.pickupmethod.self_pickup} />{' '}
+                  Pickup By Customer (No Pickup Fee)
+                </Label>
+              </FormGroup>
+              <br/>
               <Button block={true} color='primary'>Save</Button>
             </Form>
           </Col>

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Row, Col, Button, Table } from 'reactstrap'
 import { Link } from 'routes'
-import { getAllPickupMethod } from 'actions'
+import { getAllPickupMethod, deletePickupMethod } from 'actions'
 import _ from 'lodash'
 
 interface StateProps {
@@ -11,6 +11,7 @@ interface StateProps {
 
 interface DispatchProps {
   getAllPickupMethod: typeof getAllPickupMethod
+  deletePickupMethod: typeof deletePickupMethod
 }
 
 interface PropsComponent extends StateProps, DispatchProps { }
@@ -22,6 +23,10 @@ class PickupMethodList extends Component<PropsComponent, StateComponent> {
     this.props.getAllPickupMethod()
   }
 
+  onDeleteClick = (id: Number) => () => {
+    this.props.deletePickupMethod(id)
+  }
+
   renderDataTable () {
     const { allPickupMethod } = this.props
     if (!allPickupMethod) return <td/>
@@ -29,7 +34,10 @@ class PickupMethodList extends Component<PropsComponent, StateComponent> {
       return (
         <tr key={index}>
           <td>{data.id}</td>
-          <td>{data.pickup_method_name}</td>
+          <td>{data.pickup_method_name} (Code: {data.code})</td>
+          <td>{data.is_rajaongkir_supported ? 'Yes' : 'No'}</td>
+          <td>{data.self_pickup ? 'Yes' : 'No'}</td>
+          <td><Button color='danger' size='sm' onMouseDown={this.onDeleteClick(data.id)}>Delete</Button></td>
         </tr>
       )
     })
@@ -51,6 +59,9 @@ class PickupMethodList extends Component<PropsComponent, StateComponent> {
               <tr>
                 <th>No</th>
                 <th>Pickup Method Name</th>
+                <th>Rajaongkir?</th>
+                <th>Pickup By Customer?</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -69,4 +80,4 @@ const mapStateToProps = ({ pickupmethod }: any) => {
   return { allPickupMethod }
 }
 
-export default connect(mapStateToProps, { getAllPickupMethod })(PickupMethodList)
+export default connect(mapStateToProps, { getAllPickupMethod, deletePickupMethod })(PickupMethodList)

@@ -2,11 +2,15 @@ import { Action, UPDATE_DATA_PICKUP_METHOD, GET_ALL_PICKUP_METHOD } from 'action
 
 interface State {
   pickup_method_name: string
+  is_rajaongkir_supported: boolean
+  self_pickup: boolean
   allPickupMethod: any[]
 }
 
 const INITIAL_STATE: State = {
   pickup_method_name: '',
+  is_rajaongkir_supported: false,
+  self_pickup: false,
   allPickupMethod: []
 }
 
